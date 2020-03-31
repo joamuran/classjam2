@@ -1,0 +1,56 @@
+{
+  "_from": "dile-close-icon-template@^1.0.5",
+  "_id": "dile-close-icon-template@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha512-pswHCGdTqwHrwhV/dwq0JbDoJN0LeT82VUqamj7HGGibB/29omy4jvlFtP7EFuEaqRH1j3uOdWKcWelPzr5bJw==",
+  "_location": "/dile-close-icon-template",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "dile-close-icon-template@^1.0.5",
+    "name": "dile-close-icon-template",
+    "escapedName": "dile-close-icon-template",
+    "rawSpec": "^1.0.5",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.5"
+  },
+  "_requiredBy": [
+    "/dile-modal"
+  ],
+  "_resolved": "https://registry.npmjs.org/dile-close-icon-template/-/dile-close-icon-template-1.0.5.tgz",
+  "_shasum": "5db37273299ac93f77ce60689eb4635e264be75b",
+  "_spec": "dile-close-icon-template@^1.0.5",
+  "_where": "/home/joamuran/devel/cj2pwa/cj-app/node_modules/dile-modal",
+  "author": {
+    "name": "@midesweb"
+  },
+  "bugs": {
+    "url": "https://github.com/Polydile/dile-close-icon-template/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "lit-element": "^2.2.1"
+  },
+  "deprecated": false,
+  "description": "A simple close icon created in a LitElement template to use in Web Components",
+  "homepage": "https://github.com/Polydile/dile-close-icon-template#readme",
+  "keywords": [
+    "close icon",
+    "icon",
+    "template",
+    "close template",
+    "LitElement"
+  ],
+  "license": "MIT",
+  "main": "dile-close-icon-template.js",
+  "name": "dile-close-icon-template",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Polydile/dile-close-icon-template.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.5"
+}

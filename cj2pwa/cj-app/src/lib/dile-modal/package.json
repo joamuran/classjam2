@@ -1,0 +1,63 @@
+{
+  "_from": "dile-modal",
+  "_id": "dile-modal@1.5.2",
+  "_inBundle": false,
+  "_integrity": "sha512-iIbhwOcMtSOvlGDeTAHvMv2TLi3aTzo5u4+JM2PrdXJl7EdCfrNViblU8Pt95b6DnNWqblK1Nu9mqKitG95Bew==",
+  "_location": "/dile-modal",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "dile-modal",
+    "name": "dile-modal",
+    "escapedName": "dile-modal",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/dile-modal/-/dile-modal-1.5.2.tgz",
+  "_shasum": "f9570f24ea1520259b0674babb8d381342dfd65a",
+  "_spec": "dile-modal",
+  "_where": "/home/joamuran/devel/cj2pwa/cj-app",
+  "author": {
+    "name": "Miguel Angel Alvarez"
+  },
+  "bugs": {
+    "url": "https://github.com/Polydile/dile-modal/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "dile-close-icon-template": "^1.0.5",
+    "lit-element": "^2.2.0"
+  },
+  "deprecated": false,
+  "description": "Web Component to implement a modal box",
+  "devDependencies": {
+    "@open-wc/demoing-storybook": "^0.3.0"
+  },
+  "homepage": "https://github.com/Polydile/dile-modal#readme",
+  "keywords": [
+    "webcomponents",
+    "javascript",
+    "litelement",
+    "modal box"
+  ],
+  "license": "MIT",
+  "main": "dile-modal.js",
+  "name": "dile-modal",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Polydile/dile-modal.git"
+  },
+  "scripts": {
+    "site:build": "npm run storybook:build",
+    "storybook": "start-storybook -p 9001",
+    "storybook:build": "build-storybook -o _site -s storybook-static",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.5.2"
+}

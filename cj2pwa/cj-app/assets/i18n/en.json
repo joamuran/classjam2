@@ -1,0 +1,13 @@
+{
+  "header": {
+    "title": "Class Jam" 
+  },
+
+  "season-component":{
+    "title": "In wich season are we?",
+    "spring":"Spring",
+    "summer":"Summer",
+    "winter":"Winter",
+    "autumn":"Autumn"
+  }
+}

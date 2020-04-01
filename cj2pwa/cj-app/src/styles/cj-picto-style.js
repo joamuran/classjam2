@@ -1,8 +1,9 @@
 import { css } from 'lit-element';
 
 export const CjPictoStyle = css`
+
 .iconPictoText{
-    font-size: 10px;
+    font-size: 12px;
     height: 15%;
     width: 100%;
 }
@@ -33,6 +34,5 @@ export const CjPictoStyle = css`
 .winter{
     background-image: url("/assets/img/winter.png");
 }
-
 
 `;

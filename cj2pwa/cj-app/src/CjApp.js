@@ -89,13 +89,28 @@ export class CjApp extends LitElement {
 
 
     document.addEventListener("updateState", function (e) {
-      /* Per provar si va el patró mediador*/
+      let component=e.detail.component;
+      let key=e.detail.key;
+      let value=e.detail.value;
+
+      console.log(component+" - " +key+" - "+ value);
+      let tmp = self.config;
+      for (let i in tmp.components){
+        if (tmp.components[i].component==component){
+          tmp.components[i].componentdata="{\""+key+"\":\"" + value + "\"}";
+        }
+        
+      }
+
+      /* Per provar si va el patró mediador* /
       console.log(e.detail.picto);
       let tmp = self.config;
       tmp.components[0].componentdata = "{\"season\":\"" + e.detail.picto + "\"}";
       self.config = tmp;
       console.log(self.config);
-
+      */
+      self.config = tmp;
+      console.log(self.config);
       self.update(); // Amb açò va!
       //https://julienrenaux.fr/2019/04/01/lit-element-rendering-strategies-explained/
     });

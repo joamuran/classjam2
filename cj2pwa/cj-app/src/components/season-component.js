@@ -18,7 +18,7 @@ https://codesandbox.io/s/moy4x14yj
 */
 
 const ro = new ResizeObserver(entries => {
-   // console.log("resize detect");
+    // console.log("resize detect");
     entries.forEach(entry => entry.target.resizedCallback(entry.contentRect));
     //entries.forEach(entry => {console.log(entry);});
 });
@@ -32,7 +32,8 @@ export class SeasonComponent extends LitElement {
         return {
             config: { type: Object },
             data: { type: Object },     // configuració importada del JSON, s'estableix via atribut a l'etiqueta
-            isediting: { type: Boolean }  // Indica si s'està en mode edició o assemblea
+            isediting: { type: Boolean },  // Indica si s'està en mode edició o assemblea
+            selectedToConfirm: { type: String }   // Per al diàleg de confirmació, indica la selecció de l'usuari per mostrar-la en la confirmació
             /*scale: { type: Number }*/
 
         }
@@ -53,6 +54,8 @@ export class SeasonComponent extends LitElement {
         super();
         let self = this;
         this.resizing = false;
+
+        this.selectedToConfirm = "";
         //this.colortest = css`red`;
 
         /*this.addEventListener("resize", function (e) {
@@ -124,7 +127,7 @@ export class SeasonComponent extends LitElement {
         // In Assembly mode, let's start the component selection dialog
         console.log("Editing: " + this.isediting);
         this.shadowRoot.getElementById("modalSeasonSelector").open();
-        console.log(this.shadowRoot.getElementById("modalSeasonSelector"));
+        //console.log(this.shadowRoot.getElementById("modalSeasonSelector"));
     }
 
     firstUpdated(changedProperties) {
@@ -157,12 +160,26 @@ export class SeasonComponent extends LitElement {
     }
 
     updateState(e) {
-        console.log(e.target.picto);
         this.dispatchEvent(new CustomEvent('updateState', {
             bubbles: true,
             composed: true,
-            detail: { picto: e.target.picto, test: true }
+            detail: { component: "seasonComponent",
+                      key: "season",   /* Updates key in componentdata */
+                      value: this.selectedToConfirm }
+
         }));
+        this.shadowRoot.getElementById("modalSeasonConfirm").close();
+    }
+
+    confirmDialog(e) {
+        //console.log(e.target.picto);
+        this.selectedToConfirm = e.target.picto;
+        this.shadowRoot.getElementById("modalSeasonSelector").close();
+        this.shadowRoot.getElementById("modalSeasonConfirm").open();
+    }
+
+    cancelDialog(e){
+        this.shadowRoot.getElementById("modalSeasonConfirm").close();
     }
 
     render() {
@@ -176,6 +193,44 @@ export class SeasonComponent extends LitElement {
 
 
         return html`
+        <style>
+        /* Com que es tracta d'estils continguts en un component intern, sembla
+        que els estils del getstyles no s'apliquen i els hem d'incloure aci */
+
+            .thumbup, .thumbdown{
+                width: 150px; 
+                height: 150px;
+                position: relative;
+                background-size: cover;
+                display: inline-block;
+                /*margin-left: 100px;*/
+                transition: all ease 0.3s;
+                
+                }
+
+                .thumbup:hover, .thumbdown:hover{
+                cursor: pointer;
+                transform: scale(1.2);
+
+                }
+            
+            .thumbup{  background-image: url("/assets/img/thumbup.png"); }
+            .thumbdown{ background-image: url("/assets/img/thumbdown.png"); }
+
+            .selectablePicto{
+                width:100px;
+                height:100px;
+                float: left;
+                margin:10px;
+                transition: all ease 0.5s;
+
+            }
+            .selectablePicto:hover{
+                transform: scale(1.2);
+            }
+        </style>
+
+
         <slot name="margins"></slot>
         <div class="component" style="width:100px; height:100px; transform-origin: top left;">
             <div style="height:15px; width:100px;" class="componenth1">${translate("season-component.title")}</div>
@@ -188,14 +243,41 @@ export class SeasonComponent extends LitElement {
 
         <!-- https://www.webcomponents.org/element/dile-modal -->
             <dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:550px; --dile-modal-height:300px;"
+                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:550px; --dile-modal-height:310px;"
                         id="modalSeasonSelector" >
                 <h3>${translate("season-component.title")}</h3>
                 ${configArray.map(item => html`
-                <div style="width:100px; height:100px; float: left; margin:10px">
-                    <cj-picto @click=${function (e) { this.updateState(e); }} class="selectable" picto="${item}" label="${translate("season-component." + item)}"></cj-picto>
+                <div class="selectablePicto">
+                    <cj-picto @click=${function (e) { this.confirmDialog(e); }} 
+                              class="selectable" 
+                              picto="${item}" 
+                              pictowidth=100 pictoheight=100
+                              label="${translate("season-component." + item)}"></cj-picto>
                 </div>
                 `)}   
+            </dile-modal> 
+
+            <dile-modal showCloseIcon 
+                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; --dile-modal-height:750px;"
+                        id="modalSeasonConfirm" >
+                        <h3 style="margin: 10px;">${translate("season-component.verify")}</h3>
+
+                        <cj-picto picto="${this.selectedToConfirm}" 
+                        style="margin: 0px auto; display: inline-block;"
+                        label="${translate("season-component." + this.selectedToConfirm)}"
+                        pictowidth=500 pictoheight=500></cj-picto>
+
+                        <div style="/*background-color: #ffff00;*/
+                                    width: 100%; 
+                                    height: 180px; 
+                                    /*margin-left: -100px;*/
+                                    margin-top: -80px; 
+                                    padding:0px; 
+                                    overflow: visible">
+                            <div class="thumbup" @click=${function (e) { this.updateState(e); }}></div>
+                            <div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div>
+                        </div>
+                
             </dile-modal> 
         
         `;

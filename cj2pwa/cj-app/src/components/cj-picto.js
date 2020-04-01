@@ -11,7 +11,15 @@ export class CjPicto extends LitElement {
         return {
             picto: { type: String },
             label: { type: String },
+            pictowidth: {type: Number},
+            pictoheight: {type: Number}
         };
+    }
+
+    constructor(){
+        super();
+        this.pictowidth=100;
+        this.pictoheight=100;
     }
 
     static get styles(){
@@ -19,9 +27,12 @@ export class CjPicto extends LitElement {
     }
 
     render() {
+        let fontSize=Math.round(this.pictowidth*12/100);
         return html`
-            <div style="height:70px; width:100px;" class="iconPicto ${this.picto}" ></div>
-            <div style="height:15px; width:100px;" class="iconPictoText">${this.label}</div>
+            <div class="picto" style="width:${this.pictowidth}px; height:${this.pictoheight}px">
+            <div style="height:70%; width:100%;" class="iconPicto ${this.picto}" ></div>
+            <div style="height:15%; width:100%;" class="iconPictoText" style="font-size: ${fontSize}px">${this.label}</div>
+            </div>
         `;
     }
 }

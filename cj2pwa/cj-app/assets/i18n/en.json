@@ -8,6 +8,7 @@
     "spring":"Spring",
     "summer":"Summer",
     "winter":"Winter",
-    "autumn":"Autumn"
+    "autumn":"Autumn",
+    "verify":"Is it right?"
   }
 }

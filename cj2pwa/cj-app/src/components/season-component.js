@@ -4,9 +4,9 @@ import { LitElement, html, css } from 'lit-element';
 import { CjPicto } from "./cj-picto";
 
 
-
 import { translate } from "@appnest/lit-translate"; // i18n
 import { DileModal } from "../lib/dile-modal"; // Modal window: dile-modal
+import { SimpleComponent } from './simple-component/simple-component';
 
 
 /* Sobre el REsizeObserver:
@@ -24,101 +24,12 @@ const ro = new ResizeObserver(entries => {
 });
 
 
-export class SeasonComponent extends LitElement {
+/*export class SeasonComponent extends LitElement {*/
+export class SeasonComponent extends SimpleComponent {
 
-    static get properties() {
-        let self = this;
-        // console.log(this);
-        return {
-            config: { type: Object },
-            data: { type: Object },     // configuració importada del JSON, s'estableix via atribut a l'etiqueta
-            isediting: { type: Boolean },  // Indica si s'està en mode edició o assemblea
-            selectedToConfirm: { type: String }   // Per al diàleg de confirmació, indica la selecció de l'usuari per mostrar-la en la confirmació
-            /*scale: { type: Number }*/
+    
 
-        }
-    }
-
-    /*shouldUpdate(changedProperties) {
-        changedProperties.forEach((oldValue, propName) => {
-            console.log(`${propName} changed. oldValue: ${oldValue}`);
-            if (propName == "resizing") console.log("got");
-        });
-
-        return true;
-        //return changedProperties.has('prop1');
-    }*/
-
-
-    constructor() {
-        super();
-        let self = this;
-        this.resizing = false;
-
-        this.selectedToConfirm = "";
-        //this.colortest = css`red`;
-
-        /*this.addEventListener("resize", function (e) {
-            //setTimconsole.log(e.target.offsetWidth);
-
-            setTimeout(function () {
-                //console.log(self.offsetWidth);
-                let scale = Math.min(
-                    self.offsetWidth / 100,
-                    self.offsetHeight / 100
-                );
-
-                console.log(scale);
-                self.shadowRoot.querySelector("div.component").style.transform = "scale(" + scale + ")";
-            }, 200);
-        });*/
-        // Aci encara no tenim accés al valor dels atributs en l'etiqueta
-    }
-
-
-
-
-    static get styles() {
-
-        return [
-            css`
-        :host {
-            display: block;
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-            /*background-color: #00ff00;*/
-            /*text-transform: uppercase;*/
-            
-        }
-
-        :host([isediting]){
-            border: dotted 2px orange;
-        }
-
-        /*::slotted(span) {
-            border-color: white !important;
-          }*/
-        
-                
-        /*.component{
-            display: block;
-            width: 100%;
-            height: 100%;
-            margin: 0px;
-            /*background-color: #0000ff;* /
-            /*text-transform: uppercase;* /
-        }*/
-
-        .componenth1{
-            font-size: 10px;
-            height: 15%;
-            width: 100%;
-            /*background-color: #00ff00;*/
-        }
-
-    `];
-    }
+    
 
     handleClick() {
         // Nothing to do in edition mode
@@ -218,8 +129,8 @@ export class SeasonComponent extends LitElement {
             .thumbdown{ background-image: url("/assets/img/thumbdown.png"); }
 
             .selectablePicto{
-                width:100px;
-                height:100px;
+                width:200px;
+                height:200px;
                 float: left;
                 margin:10px;
                 transition: all ease 0.5s;
@@ -243,7 +154,7 @@ export class SeasonComponent extends LitElement {
 
         <!-- https://www.webcomponents.org/element/dile-modal -->
             <dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:550px; --dile-modal-height:310px;"
+                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; --dile-modal-height:750px;"
                         id="modalSeasonSelector" >
                 <h3>${translate("season-component.title")}</h3>
                 ${configArray.map(item => html`
@@ -251,7 +162,7 @@ export class SeasonComponent extends LitElement {
                     <cj-picto @click=${function (e) { this.confirmDialog(e); }} 
                               class="selectable" 
                               picto="${item}" 
-                              pictowidth=100 pictoheight=100
+                              pictowidth=200 pictoheight=200
                               label="${translate("season-component." + item)}"></cj-picto>
                 </div>
                 `)}   

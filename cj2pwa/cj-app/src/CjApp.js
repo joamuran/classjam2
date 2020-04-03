@@ -89,17 +89,17 @@ export class CjApp extends LitElement {
 
 
     document.addEventListener("updateState", function (e) {
-      let component=e.detail.component;
-      let key=e.detail.key;
-      let value=e.detail.value;
-
-      console.log(component+" - " +key+" - "+ value);
+      let component = e.detail.component;
+      let key = e.detail.key;
+      let value = e.detail.value;
+      console.log("updateState");
+      console.log(component + " - " + key + " - " + value);
       let tmp = self.config;
-      for (let i in tmp.components){
-        if (tmp.components[i].component==component){
-          tmp.components[i].componentdata="{\""+key+"\":\"" + value + "\"}";
+      for (let i in tmp.components) {
+        if (tmp.components[i].component == component) {
+          tmp.components[i].componentdata = "{\"" + key + "\":\"" + value + "\"}";
         }
-        
+
       }
 
       /* Per provar si va el patró mediador* /
@@ -123,25 +123,25 @@ export class CjApp extends LitElement {
     this.scaleApp();
   }
 
-  scaleApp(){
+  scaleApp() {
     // Determinant el factor d'escala
     let scale = Math.min(
       window.innerWidth / self.gridOptions.defaultWidth,
-      window.innerHeight / (self.gridOptions.defaultHeight+self.gridOptions.headerHeight)
+      window.innerHeight / (self.gridOptions.defaultHeight + self.gridOptions.headerHeight)
     );
-    
+
     //console.log(window.innerWidth+" "+self.gridOptions.defaultWidth+" "+window.innerHeight+" "+self.gridOptions.defaultHeight+" "+self.gridOptions.headerHeight);
 
     // Determinant la translació
     let tx, ty;
-    tx=Math.floor(((window.innerWidth-self.gridOptions.defaultWidth*scale)/2));
-    ty=Math.floor(((window.innerHeight-(self.gridOptions.defaultHeight+self.gridOptions.headerHeight)*scale)/2));
-    
+    tx = Math.floor(((window.innerWidth - self.gridOptions.defaultWidth * scale) / 2));
+    ty = Math.floor(((window.innerHeight - (self.gridOptions.defaultHeight + self.gridOptions.headerHeight) * scale) / 2));
+
     // Capturem l'element :host i apliquem els canvis
-    let app=self.shadowRoot.host; // Així accedim a tot el shadow DOM (element cj-app)
-    let stringScale="translate("+tx+"px,"+ty+"px) scale("+scale+")";
+    let app = self.shadowRoot.host; // Així accedim a tot el shadow DOM (element cj-app)
+    let stringScale = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")";
     console.log(stringScale);
-    app.style.transform=stringScale;
+    app.style.transform = stringScale;
   }
 
   static get styles() {
@@ -199,9 +199,24 @@ export class CjApp extends LitElement {
               col="${component.col}"
               row="${component.row}"
               data=${component.componentdata}
-              config=${component.componentconfig}>
+              ?isediting="${this.editMode}"
+              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
               ${this.renderMargins(this.editMode)}
             </weather-component>`
+
+      case "monthComponent":
+        return html`
+          <month-component 
+              height="${component.size_y}" 
+              width="${component.size_x}"
+              col="${component.col}"
+              row="${component.row}"
+              data=${component.componentdata}
+              ?isediting="${this.editMode}"
+              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
+              ${this.renderMargins(this.editMode)}
+            </month-component>`
+
       default:
         return html`
         <div placeholder></div>

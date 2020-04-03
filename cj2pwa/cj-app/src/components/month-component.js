@@ -5,23 +5,23 @@ import { CjPicto } from "./cj-picto";
 
 
 import { translate } from "@appnest/lit-translate"; // i18n
-import { DileModal } from "../lib/dile-modal"; // Modal window: dile-modal
+import { DileModal } from "../lib/dile-modal/dile-modal"; // Modal window: dile-modal
 import { SimpleComponent } from './simple-component/simple-component';
 
 
-export class SeasonComponent extends SimpleComponent {
+export class MonthComponent extends SimpleComponent {
 
     constructor(){
         super();
-        this.componentName="seasonComponent";
+        this.componentName="monthComponent";
     }    
 
     updateState(e) {
         this.dispatchEvent(new CustomEvent('updateState', {
             bubbles: true,
             composed: true,
-            detail: { component: "seasonComponent",
-                      key: "season",   /* Updates key in componentdata */
+            detail: { component: "monthComponent",
+                      key: "month",   /* Updates key in componentdata */
                       value: this.selectedToConfirm }
 
         }));
@@ -32,14 +32,14 @@ export class SeasonComponent extends SimpleComponent {
     getComponentOptions(){
 
         let componentOptions={};
-        componentOptions.headerTitle=translate("season-component.title");
-        componentOptions.currentPicto=this.data.season;
-        componentOptions.currentLabel=translate("season-component." + this.data.season);
-        componentOptions.componentPrefix="season-component.";
+        componentOptions.headerTitle=translate("month-component.title");
+        componentOptions.currentPicto=this.data.month;
+        componentOptions.currentLabel=translate("month-component." + this.data.month);
+        componentOptions.componentPrefix="month-component.";
 
         return componentOptions;
 
     }
 
 }
-customElements.define('season-component', SeasonComponent);
+customElements.define('month-component', MonthComponent);

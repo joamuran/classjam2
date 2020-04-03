@@ -17,7 +17,7 @@ export const Config = {
             {
                 "component": "weatherComponent",
                 "componentdata": "{\"weather\":\"rainy\"}",
-                "componentconfig": "{\"sunny\":true,\"partial_sunny\":true,\"partial_cloudy\":true,\"cloudy\":true,\"rainy\":true,\"snow\":false}",
+                "componentconfig": "{\"sunny\":true,\"partial_sunny\":true,\"partial_cloudy\":true,\"cloudy\":true,\"rainy\":true,\"snow\":false,\"tempest\":false}",
                 "col": 1,
                 "row": 4,
                 "size_x": 2,

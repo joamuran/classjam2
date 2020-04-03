@@ -3,12 +3,31 @@
     "title": "Class Jam" 
   },
 
+  "component":{
+    "verify":"Is it right?"
+  },
+
   "season-component":{
     "title": "In wich season are we?",
     "spring":"Spring",
     "summer":"Summer",
     "winter":"Winter",
     "autumn":"Autumn",
-    "verify":"Is it right?"
+    "undefined":" "
+
+  },
+
+  "weather-component":{
+    "title": "what is the weather like?",
+    "sunny":"Sunny",
+    "partial_sunny":"Partially sunny",
+    "partial_cloudy":"Partially cloudy",
+    "cloudy":"Cloudy",
+    "rainy":"Rainy",
+    "snow":"Snowing",
+    "tempest":"Tempest",
+    "undefined":" "
+    
   }
+
 }

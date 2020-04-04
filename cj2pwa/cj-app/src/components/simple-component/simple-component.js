@@ -37,7 +37,7 @@ export class SimpleComponent extends LitElement {
     }
 
     handleClick() {
-        /*
+        /*//
         Manages click on component
         */
 
@@ -48,11 +48,13 @@ export class SimpleComponent extends LitElement {
 
         // In Assembly mode, let's start the component selection dialog
         console.log("Editing: " + this.isediting);
-        this.shadowRoot.getElementById("modalSelector").open();
+        //this.shadowRoot.getElementById("modalSelector").open();
+        this.shadowRoot.getElementById("modalConfirm").open();
     }
 
     firstUpdated(changedProperties) {
-        this.addEventListener('click', this.handleClick);
+        //  this.addEventListener('click', this.handleClick);
+        this.addEventListener('click', this.confirmDialog);
     }
 
 
@@ -87,14 +89,24 @@ export class SimpleComponent extends LitElement {
 
     confirmDialog(e) {
         //console.log(e.target.picto);
-        this.selectedToConfirm = e.target.picto;
+        if (typeof (e.target.picto) == typeof (undefined)) 
+        {console.log(this.data);
+            this.selectedToConfirm = this.data[Object.keys(this.data)[0]];
+        }
+        else
+        {
+            console.log(e.target.picto);
+            this.selectedToConfirm = e.target.picto;
+        }
+        
         this.shadowRoot.getElementById("modalConfirm").open();
         this.shadowRoot.getElementById("modalSelector").close();
-        
+
     }
 
-    cancelDialog(e){
+    cancelDialog(e) {
         this.shadowRoot.getElementById("modalConfirm").close();
+        this.shadowRoot.getElementById("modalSelector").open(); //////////////
     }
 
     static get styles() {
@@ -106,11 +118,13 @@ export class SimpleComponent extends LitElement {
             width: 100%;
             height: 100%;
             margin: 0px;
+            cursor: pointer;
         }
 
         :host([isediting]){
             /*border: dotted 2px orange;*/
             background-color: rgba(255,165,0,0.4);
+            cursor:move;
         }
 
         .componenth1{
@@ -124,9 +138,12 @@ export class SimpleComponent extends LitElement {
 
     render() {
 
+        // Preparing items
         let configArray = new Array();
+        console.log(this.config);
         for (let k of Object.keys(this.config)) {
-            configArray.push(k);
+            // Add item only if is active (config.item is true)
+            if (this.config[k]) configArray.push(k);
         }
 
         let dialogWidth = 1000;
@@ -175,6 +192,16 @@ export class SimpleComponent extends LitElement {
             .selectablePicto:hover{
                 transform: scale(1.2);
             }
+
+            .playComponent{
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                background-color: #ff0000;
+                bottom: 10px;
+                left: 10px;
+            }
+
         </style>
 
 
@@ -223,6 +250,8 @@ export class SimpleComponent extends LitElement {
                                     overflow: visible">
                             <div class="thumbup" @click=${function (e) { this.updateState(e); }}></div>
                             <div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div>
+                            <div class="playComponent"></div>
+                            <!--div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div-->
                         </div>
                 
             </dile-modal> 

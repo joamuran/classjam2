@@ -1,33 +1,57 @@
 {
   "header": {
-    "title": "Class Jam" 
+    "title": "Class Jam"
   },
-
-  "component":{
-    "verify":"Is it right?"
+  "component": {
+    "verify": "Is it right?"
   },
-
-  "season-component":{
-    "title": "In wich season are we?",
-    "spring":"Spring",
-    "summer":"Summer",
-    "winter":"Winter",
-    "autumn":"Autumn",
-    "undefined":" "
-
+  "season-component": {
+    "title": "Season",
+    "question": "In wich season are we?",
+    "spring": "Spring",
+    "summer": "Summer",
+    "winter": "Winter",
+    "autumn": "Autumn",
+    "undefined": " "
   },
-
-  "weather-component":{
-    "title": "what is the weather like?",
-    "sunny":"Sunny",
-    "partial_sunny":"Partially sunny",
-    "partial_cloudy":"Partially cloudy",
-    "cloudy":"Cloudy",
-    "rainy":"Rainy",
-    "snow":"Snowing",
-    "tempest":"Tempest",
-    "undefined":" "
-    
+  "weather-component": {
+    "title": "The weather",
+    "question": "what is the weather like?",
+    "sunny": "Sunny",
+    "partial_sunny": "Partially sunny",
+    "partial_cloudy": "Partially cloudy",
+    "cloudy": "Cloudy",
+    "rainy": "Rainy",
+    "snow": "Snowing",
+    "tempest": "Tempest",
+    "undefined": " "
+  },
+  "month-component": {
+    "title": "Month",
+    "question": "What month are we in?",
+    "january": "january",
+    "february": "february",
+    "march": "march",
+    "april": "april",
+    "may": "may",
+    "june": "june",
+    "july": "july",
+    "august": "august",
+    "september": "september",
+    "october": "october",
+    "november": "november",
+    "december": "december",
+    "undefined": " "
+  },
+  "weekday-component": {
+    "title": "Day in the week",
+    "question": "What day is today?",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+    }
   }
-
-}

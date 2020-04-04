@@ -9,19 +9,19 @@ import { DileModal } from "../lib/dile-modal"; // Modal window: dile-modal
 import { SimpleComponent } from './simple-component/simple-component';
 
 
-export class SeasonComponent extends SimpleComponent {
+export class WeekdayComponent extends SimpleComponent {
 
     constructor(){
         super();
-        this.componentName="seasonComponent";
+        this.componentName="weekdayComponent";
     }    
 
     updateState(e) {
         this.dispatchEvent(new CustomEvent('updateState', {
             bubbles: true,
             composed: true,
-            detail: { component: "seasonComponent",
-                      key: "season",   /* Updates key in componentdata */
+            detail: { component: "weekdayComponent",
+                      key: "weekday",   /* Updates key in componentdata */
                       value: this.selectedToConfirm }
 
         }));
@@ -32,15 +32,16 @@ export class SeasonComponent extends SimpleComponent {
     getComponentOptions(){
 
         let componentOptions={};
-        componentOptions.headerTitle=translate("season-component.title");
-        componentOptions.headerQuestion=translate("season-component.question");
-        componentOptions.currentPicto=this.data.season;
-        componentOptions.currentLabel=translate("season-component." + this.data.season);
-        componentOptions.componentPrefix="season-component.";
+        componentOptions.headerTitle=translate("weekday-component.title");
+        componentOptions.headerQuestion=translate("weekday-component.question");
+        componentOptions.currentPicto=this.data.weekday;
+        componentOptions.currentLabel=translate("weekday-component." + this.data.weekday);
+        componentOptions.componentPrefix="weekday-component.";
 
         return componentOptions;
 
     }
 
 }
-customElements.define('season-component', SeasonComponent);
+customElements.define('weekday-component', WeekdayComponent);
+

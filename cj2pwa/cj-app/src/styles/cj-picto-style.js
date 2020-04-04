@@ -114,4 +114,32 @@ export const CjPictoStyle = css`
     background-image: url("/assets/img/month-component/december.png");
 }
 
+.monday{
+    background-image: url("/assets/img/weekday-component/monday.png");
+}
+
+.tuesday{
+    background-image: url("/assets/img/weekday-component/tuesday.png");
+}
+
+.wednesday{
+    background-image: url("/assets/img/weekday-component/wednesday.png");
+}
+
+.thursday{
+    background-image: url("/assets/img/weekday-component/thursday.png");
+}
+
+.friday{
+    background-image: url("/assets/img/weekday-component/friday.png");
+}
+
+.saturday{
+    background-image: url("/assets/img/weekday-component/saturday.png");
+}
+
+.sunday{
+    background-image: url("/assets/img/weekday-component/sunday.png");
+}
+
 `;

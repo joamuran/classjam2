@@ -33,6 +33,7 @@ export class MonthComponent extends SimpleComponent {
 
         let componentOptions={};
         componentOptions.headerTitle=translate("month-component.title");
+        componentOptions.headerQuestion=translate("month-component.question");
         componentOptions.currentPicto=this.data.month;
         componentOptions.currentLabel=translate("month-component." + this.data.month);
         componentOptions.componentPrefix="month-component.";

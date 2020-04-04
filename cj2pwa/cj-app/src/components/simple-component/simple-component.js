@@ -109,7 +109,8 @@ export class SimpleComponent extends LitElement {
         }
 
         :host([isediting]){
-            border: dotted 2px orange;
+            /*border: dotted 2px orange;*/
+            background-color: rgba(255,165,0,0.4);
         }
 
         .componenth1{
@@ -132,8 +133,8 @@ export class SimpleComponent extends LitElement {
         let divisions;
 
         if (configArray.length == 5) divisions = 5;
-        else if (configArray.length <= 8) divisions = 4;
-        else divisions = 6;
+        //else if (configArray.length <= 8) divisions = 4;
+        else divisions = 4;
         let pictosize = Math.floor((dialogWidth - 200) / divisions);
 
         let componentOptions = this.getComponentOptions();
@@ -186,23 +187,25 @@ export class SimpleComponent extends LitElement {
 
         <!-- https://www.webcomponents.org/element/dile-modal -->
             <dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; --dile-modal-height:750px;"
+                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; "
                         id="modalSelector" >
-                <h3>${componentOptions.headerTitle}</h3>
-                ${configArray.map(item => html`
-                <div class="selectablePicto">
-                    <cj-picto @click=${function (e) { this.confirmDialog(e); }} 
-                              class="selectable" 
-                              picto="${item}" 
-                              pictowidth="${pictosize}" pictoheight="${pictosize}"
-                              label="${translate(componentOptions.componentPrefix + item)}"></cj-picto>
-                              
+                <div style="border:20px; min-height:300px; float:left; padding:20px;">
+                    <h3>${componentOptions.headerQuestion}</h3>
+                    ${configArray.map(item => html`
+                    <div class="selectablePicto">
+                        <cj-picto @click=${function (e) { this.confirmDialog(e); }} 
+                                class="selectable" 
+                                picto="${item}" 
+                                pictowidth="${pictosize}" pictoheight="${pictosize}"
+                                label="${translate(componentOptions.componentPrefix + item)}"></cj-picto>
+                                
+                    </div>
+                    `)}   
                 </div>
-                `)}   
             </dile-modal> 
 
             <dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; --dile-modal-height:750px;"
+                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; "
                         id="modalConfirm" >
                         <h3 style="margin: 10px;">${translate("component.verify")}</h3>
 

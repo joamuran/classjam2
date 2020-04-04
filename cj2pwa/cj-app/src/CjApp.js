@@ -14,6 +14,9 @@ import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
+import './components/month-component'
+import './components/weekday-component'
+
 
 
 /* Loading Translations */
@@ -216,6 +219,19 @@ export class CjApp extends LitElement {
               config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
               ${this.renderMargins(this.editMode)}
             </month-component>`
+
+      case "weekdayComponent":
+        return html`
+          <weekday-component 
+              height="${component.size_y}" 
+              width="${component.size_x}"
+              col="${component.col}"
+              row="${component.row}"
+              data=${component.componentdata}
+              ?isediting="${this.editMode}"
+              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
+              ${this.renderMargins(this.editMode)}
+            </weekday-component>`
 
       default:
         return html`

@@ -30,8 +30,13 @@ export class CjPicto extends LitElement {
         let fontSize=Math.round(this.pictowidth*12/100);
         return html`
             <div class="picto" style="width:${this.pictowidth}px; height:${this.pictoheight}px">
-            <div style="height:70%; width:100%;" class="iconPicto ${this.picto}" ></div>
-            <div style="height:15%; width:100%;" class="iconPictoText" style="font-size: ${fontSize}px">${this.label}</div>
+            ${this.label=="" ?
+                html`<div style="height:100%; width:100%;" class="iconPicto ${this.picto}" ></div>`
+                :
+                html`<div style="height:70%; width:100%;" class="iconPicto ${this.picto}" ></div>
+                     <div style="height:15%; width:100%;" class="iconPictoText" style="font-size: ${fontSize}px">${this.label}</div>`
+            }
+            
             </div>
         `;
     }

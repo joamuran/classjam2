@@ -23,6 +23,7 @@ export class SimpleComponent extends LitElement {
         return {
             config: { type: Object },   // Component configuration, extracted from JSON file and stablished via attribute to label
             data: { type: Object },     // Component data, extracted from JSON file and stablished via attribute to label
+            actions: {type: Object},    // Component actions from JSON to play media
             isediting: { type: Boolean },  // True-> Edit Mode; False -> Assembly mode (Player)
             selectedToConfirm: { type: String },   // User selection for component, for confirm dialogs
             componentName: { type: String }   // Name of component
@@ -37,7 +38,7 @@ export class SimpleComponent extends LitElement {
     }
 
     handleClick() {
-        /*//
+        /*
         Manages click on component
         */
 
@@ -48,13 +49,11 @@ export class SimpleComponent extends LitElement {
 
         // In Assembly mode, let's start the component selection dialog
         console.log("Editing: " + this.isediting);
-        //this.shadowRoot.getElementById("modalSelector").open();
-        this.shadowRoot.getElementById("modalConfirm").open();
+        this.shadowRoot.getElementById("modalSelector").open();
     }
 
     firstUpdated(changedProperties) {
-        //  this.addEventListener('click', this.handleClick);
-        this.addEventListener('click', this.confirmDialog);
+        this.addEventListener('click', this.handleClick);
     }
 
 
@@ -89,16 +88,7 @@ export class SimpleComponent extends LitElement {
 
     confirmDialog(e) {
         //console.log(e.target.picto);
-        if (typeof (e.target.picto) == typeof (undefined)) 
-        {console.log(this.data);
-            this.selectedToConfirm = this.data[Object.keys(this.data)[0]];
-        }
-        else
-        {
-            console.log(e.target.picto);
-            this.selectedToConfirm = e.target.picto;
-        }
-        
+        this.selectedToConfirm = e.target.picto;
         this.shadowRoot.getElementById("modalConfirm").open();
         this.shadowRoot.getElementById("modalSelector").close();
 
@@ -106,7 +96,6 @@ export class SimpleComponent extends LitElement {
 
     cancelDialog(e) {
         this.shadowRoot.getElementById("modalConfirm").close();
-        this.shadowRoot.getElementById("modalSelector").open(); //////////////
     }
 
     static get styles() {
@@ -119,6 +108,11 @@ export class SimpleComponent extends LitElement {
             height: 100%;
             margin: 0px;
             cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            border-radius: 5px;
+            -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
         }
 
         :host([isediting]){
@@ -133,12 +127,46 @@ export class SimpleComponent extends LitElement {
             width: 100%;
         }
 
+        span.playBt{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background-image: url('/assets/img/PlayComponentButton.png');
+            background-size: cover;
+            bottom: 10px;
+            left: 10px;
+            z-index:1;
+          }
+    
+          span.playBt:hover{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background-image: url('/assets/img/PlayComponentButtonHover.png');
+            background-size: cover;
+            bottom: 10px;
+            left: 10px;
+          }
+    
+
     `];
+    }
+
+    playComponent(e) {
+        e.stopPropagation();
+        this.shadowRoot.getElementById("modalPlayMedia").open();
+    }
+
+    playMedia(e) {
+        e.stopPropagation();
+        console.log(this.actions);
+        console.log(this.data);
+        console.log(this.data[Object.keys(this.data)[0]]);
+
     }
 
     render() {
 
-        // Preparing items
         let configArray = new Array();
         console.log(this.config);
         for (let k of Object.keys(this.config)) {
@@ -156,6 +184,8 @@ export class SimpleComponent extends LitElement {
 
         let componentOptions = this.getComponentOptions();
 
+        console.log("**");
+        console.log(componentOptions);
         return html`
         <style>
         /* Com que es tracta d'estils continguts en un component intern, sembla
@@ -172,7 +202,7 @@ export class SimpleComponent extends LitElement {
                 
                 }
 
-                .thumbup:hover, .thumbdown:hover{
+                .thumbup:hover, .thumbdown:hover,.mediaPlay:hover{
                 cursor: pointer;
                 transform: scale(1.2);
 
@@ -193,19 +223,32 @@ export class SimpleComponent extends LitElement {
                 transform: scale(1.2);
             }
 
-            .playComponent{
-                width: 100px;
+
+            .mediaPlay{
+
+                /*background-color: #ffff00;*/
+                width: 80%; 
+                margin-top: -100px;
+                padding:0px; 
+                overflow: visible;
                 height: 100px;
-                position: absolute;
-                background-color: #ff0000;
-                bottom: 10px;
-                left: 10px;
+                position: relative;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                display: inline-block;
+                transition: all ease 0.3s;
+                background-image: url("/assets/img/PlayContentButton.png"); 
             }
+
 
         </style>
 
 
         <slot name="margins"></slot>
+        ${!this.isediting ?
+                html`<span class="playBt" @click=${function (e) { this.playComponent(e); }} ></span>`
+                : ''}
         <div class="component" style="width:100px; height:100px; transform-origin: top left;">
             <div style="height:15px; width:100px;" class="componenth1">${componentOptions.headerTitle}</div>
             <cj-picto picto="${componentOptions.currentPicto}" label="${componentOptions.currentLabel}"></cj-picto>
@@ -250,14 +293,26 @@ export class SimpleComponent extends LitElement {
                                     overflow: visible">
                             <div class="thumbup" @click=${function (e) { this.updateState(e); }}></div>
                             <div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div>
-                            <div class="playComponent"></div>
-                            <!--div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div-->
                         </div>
                 
+            </dile-modal> 
+
+
+            <!-- Dialog for media play -->
+            <dile-modal showCloseIcon 
+                style="--dile-modal-width:1000px; "
+                id="modalPlayMedia" >  
+                <h2 style="margin: 10px;">${componentOptions.currentLabel}</h2>
+                <cj-picto picto="${componentOptions.currentPicto}" 
+                    style="margin: 0px auto; display: inline-block;"
+                    label=""
+                    pictowidth=500 pictoheight=500></cj-picto>
+                    <div class="mediaPlay" @click=${function (e) { this.playMedia(e); }}></div>
+
             </dile-modal> 
         
         `;
     }
 
 }
-customElements.define('simple-component', SimpleComponent);
+customElements.define('simple-component', SimpleComponent);                

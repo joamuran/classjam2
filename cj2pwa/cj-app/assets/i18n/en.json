@@ -12,7 +12,8 @@
     "summer": "Summer",
     "winter": "Winter",
     "autumn": "Autumn",
-    "undefined": " "
+    "undefined": " ",
+    "": " "
   },
   "weather-component": {
     "title": "The weather",
@@ -24,7 +25,8 @@
     "rainy": "Rainy",
     "snow": "Snowing",
     "tempest": "Tempest",
-    "undefined": " "
+    "undefined": " ",
+    "": " "
   },
   "month-component": {
     "title": "Month",
@@ -41,7 +43,8 @@
     "october": "october",
     "november": "november",
     "december": "december",
-    "undefined": " "
+    "undefined": " ",
+    "": " "
   },
   "weekday-component": {
     "title": "Day in the week",
@@ -52,6 +55,7 @@
     "thursday": "Thursday",
     "friday": "Friday",
     "saturday": "Saturday",
-    "sunday": "Sunday"
+    "sunday": "Sunday",
+    "": " "
     }
   }

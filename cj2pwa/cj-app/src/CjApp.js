@@ -161,7 +161,7 @@ export class CjApp extends LitElement {
     //console.log("rendermargins");
     return html`
     <style>
-     span[slot]{
+     span[slot="margins"]{
         border-color: white;
         cursor: move;
         overflow: hidden;
@@ -177,8 +177,52 @@ export class CjApp extends LitElement {
     `;
   }
 
+  /*renderPlayBt(editing, data, config) {
+    return;
+    // Render player button if has media associated
+    let media={"url":"Hola"};
+    return html`
+    <style>
+     span[slot="playBt"]{
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      background-image: url('/assets/img/PlayComponentButton.png');
+      background-size: cover;
+      bottom: 10px;
+      left: 10px;
+      z-index:1;
+        
+      ${editing ? html`display: none;` : html`display:block;`}
+      }
+
+      span[slot="playBt"]:hover{
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        background-image: url('/assets/img/PlayComponentButtonHover.png');
+        background-size: cover;
+        bottom: 10px;
+        left: 10px;
+          
+        
+      }
+    </style>
+    
+    <span slot="playBt" @click=${function(e){this.playComponent(e, media);}} ></span>
+    
+    `;
+  }
+
+  playComponent(e, media){
+    e.stopPropagation();
+    this.shadowRoot.getElementById("modalPlayMedia").open();
+    
+  }
+*/
 
   renderComponent(component) {
+    if (component.componentvisibility=="false") return;
     switch (component.component) {
       case "seasonComponent":
         return html`
@@ -190,9 +234,11 @@ export class CjApp extends LitElement {
             row="${component.row}"
             data=${component.componentdata}
             ?isediting="${this.editMode}"
-            config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
-            ${this.renderMargins(this.editMode)}
+            actions=${component.componentactions}
+            config=${component.componentconfig}>
+            ${this.renderMargins(this.editMode)}            
           </season-component>`;
+    //${this.renderPlayBt(this.editMode, component.componentdata, component.componentconfig)}
 
       case "weatherComponent":
         return html`
@@ -203,8 +249,10 @@ export class CjApp extends LitElement {
               row="${component.row}"
               data=${component.componentdata}
               ?isediting="${this.editMode}"
-              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
+              actions=${component.componentactions}
+              config=${component.componentconfig}>
               ${this.renderMargins(this.editMode)}
+              
             </weather-component>`
 
       case "monthComponent":
@@ -216,8 +264,10 @@ export class CjApp extends LitElement {
               row="${component.row}"
               data=${component.componentdata}
               ?isediting="${this.editMode}"
-              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
+              actions=${component.componentactions}
+              config=${component.componentconfig}>
               ${this.renderMargins(this.editMode)}
+              
             </month-component>`
 
       case "weekdayComponent":
@@ -229,8 +279,10 @@ export class CjApp extends LitElement {
               row="${component.row}"
               data=${component.componentdata}
               ?isediting="${this.editMode}"
-              config=${component.componentconfig} @resize=${function () { console.log("resized"); }}>
+              actions=${component.componentactions}
+              config=${component.componentconfig}>
               ${this.renderMargins(this.editMode)}
+              
             </weekday-component>`
 
       default:

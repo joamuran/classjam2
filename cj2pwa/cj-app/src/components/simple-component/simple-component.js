@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
-
 /* Sobre el REsizeObserver:
 S'utilitza per detectar els canvis de tamany i segons aquests, apliquem
 l'escalat als nostres components. 
@@ -26,7 +25,8 @@ export class SimpleComponent extends LitElement {
             actions: {type: Object},    // Component actions from JSON to play media
             isediting: { type: Boolean },  // True-> Edit Mode; False -> Assembly mode (Player)
             selectedToConfirm: { type: String },   // User selection for component, for confirm dialogs
-            componentName: { type: String }   // Name of component
+            componentName: { type: String },   // Name of component
+            youtubeurl:  {type: String} // URL for youtube video play
         }
     }
 
@@ -159,9 +159,64 @@ export class SimpleComponent extends LitElement {
 
     playMedia(e) {
         e.stopPropagation();
-        console.log(this.actions);
-        console.log(this.data);
-        console.log(this.data[Object.keys(this.data)[0]]);
+        try{
+            let currentData, action, type, source;
+            
+            /*
+            WIP: Quan tingam tot el json, de moment només default
+
+            if (typeof(this.data[Object.keys(this.data)[0]]!==undefined))
+                currentData=this.data[Object.keys(this.data)[0]];
+            else if (typeof(this.data[Object.keys("default")[0]]!==undefined))
+                currentData=this.data[Object.keys("default")[0]];*/
+
+
+            /*console.log();
+            if (typeof(this.data[Object.keys("default")[0]]!==undefined))
+                currentData=this.data[Object.keys("default")[0]];
+
+
+            action=this.actions[currentData].onplay.action;
+            type=this.actions[currentData].onplay.type;
+            source=this.actions[currentData].onplay.source;
+            */
+
+
+           action=this.actions.default.onplay.action;
+           type=this.actions.default.onplay.type;
+           source=this.actions.default.onplay.source;
+
+            //console.log(action+" "+type+" "+source);
+
+            // By now only working with youtube
+            if (action=="video" && type=="youtube" && typeof(source)!==undefined)
+            {
+                this.youtubeurl=source;
+
+                this.dispatchEvent(new CustomEvent('playMedia', {
+                    bubbles: true,
+                    composed: true,
+                    detail: { url: source }
+                }));
+                // ModalConfirm defined in simple-component.js
+                //this.shadowRoot.getElementById("modalConfirm").close();
+
+
+                
+                //this.shadowRoot.getElementById("youtubePlayer").open();
+            }
+
+        } catch(e)
+        {
+            console.log("No hi ha video associat");
+            console.log(e);
+        }
+
+        // console.log(action+" "+type+" "+source);
+
+        
+        
+
 
     }
 
@@ -310,6 +365,21 @@ export class SimpleComponent extends LitElement {
                     <div class="mediaPlay" @click=${function (e) { this.playMedia(e); }}></div>
 
             </dile-modal> 
+
+            <!-- Dialog for media play -- >
+            <dile-modal showCloseIcon 
+                style="--dile-modal-width:1000px; "
+                id="youtubePlayer" >  
+                < !--https://googlewebcomponents.github.io/google-youtube/components/google-youtube/ -- >
+
+                <iframe width="1280" height="720" 
+                    src="https://www.youtube.com/embed/${this.youtubeurl}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+
+            </dile-modal--> 
         
         `;
     }

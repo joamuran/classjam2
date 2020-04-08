@@ -37,7 +37,8 @@ export class CjApp extends LitElement {
       editMode: { type: Boolean },   // Indica si estem en mode edició (true) o assemblea (false)
       config: { type: Object },    // configuració importada del JSON (Després podriem carregar-la amb ajax)
       gridOptions: { type: Object },  // Configuració per al grid
-      hasLoadedStrings: { type: Boolean } // i18n: Indica quan s'han carregat les cadenes, de manera que pogam aplicar les traduccions
+      hasLoadedStrings: { type: Boolean }, // i18n: Indica quan s'han carregat les cadenes, de manera que pogam aplicar les traduccions
+      mediaUrl: { type: String }
 
     };
   }
@@ -91,6 +92,24 @@ export class CjApp extends LitElement {
     this.hasLoadedStrings = true;
 
 
+    document.addEventListener("playMedia", function (e) {
+      self.mediaUrl = e.detail.url;
+      self.shadowRoot.getElementById("youtubePlayer").open();
+    });
+
+    document.addEventListener("dile-modal-closed", function (e) {
+        // When closing modal, stops youtube player
+        let iframe = self.shadowRoot.getElementById("iframe");
+        let src = "https://www.youtube.com/embed/" + self.mediaUrl;
+        //console.log(src);
+        iframe.setAttribute("src", src);
+    
+    });
+
+
+
+
+
     document.addEventListener("updateState", function (e) {
       let component = e.detail.component;
       let key = e.detail.key;
@@ -119,6 +138,8 @@ export class CjApp extends LitElement {
     });
 
 
+
+
     window.addEventListener("resize", function () {
       self.scaleApp();
     }, true)
@@ -126,6 +147,7 @@ export class CjApp extends LitElement {
     this.scaleApp();
   }
 
+  
   scaleApp() {
     // Determinant el factor d'escala
     let scale = Math.min(
@@ -222,7 +244,7 @@ export class CjApp extends LitElement {
 */
 
   renderComponent(component) {
-    if (component.componentvisibility=="false") return;
+    if (component.componentvisibility == "false") return;
     switch (component.component) {
       case "seasonComponent":
         return html`
@@ -238,7 +260,7 @@ export class CjApp extends LitElement {
             config=${component.componentconfig}>
             ${this.renderMargins(this.editMode)}            
           </season-component>`;
-    //${this.renderPlayBt(this.editMode, component.componentdata, component.componentconfig)}
+      //${this.renderPlayBt(this.editMode, component.componentdata, component.componentconfig)}
 
       case "weatherComponent":
         return html`
@@ -334,6 +356,21 @@ export class CjApp extends LitElement {
       </paper-grid>
     </div>
    
+    <!-- Dialog for media play -->
+            <dile-modal showCloseIcon 
+                style="--dile-modal-width:1000px; "
+                id="youtubePlayer" >  
+                
+                <iframe width="100%" height="700" id="iframe"
+                    src="https://www.youtube.com/embed/${this.mediaUrl}?autoplay=1" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+
+            </dile-modal> 
+
+
     `;
   }
 }

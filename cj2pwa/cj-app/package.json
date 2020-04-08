@@ -6,9 +6,9 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.21.0",
+    "es-dev-server": "^1.46.1",
     "rimraf": "^2.6.3",
-    "rollup": "^1.15.4",
-    "es-dev-server": "^1.5.0"
+    "rollup": "^1.15.4"
   },
   "name": "cj-app",
   "version": "0.0.0",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@appnest/lit-translate": "^1.1.18",
     "@fluidnext-polymer/paper-grid": "^3.0.4",
-    "lit-element": "^2.0.1",
-    "lit-html": "^1.0.0"
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1"
   }
 }

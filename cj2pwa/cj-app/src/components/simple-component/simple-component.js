@@ -239,13 +239,9 @@ export class SimpleComponent extends LitElement {
 
         let componentOptions = this.getComponentOptions();
 
-        console.log("**");
         console.log(componentOptions);
         return html`
         <style>
-        /* Com que es tracta d'estils continguts en un component intern, sembla
-        que els estils del getstyles no s'apliquen i els hem d'incloure aci */
-
             .thumbup, .thumbdown{
                 width: 150px; 
                 height: 150px;

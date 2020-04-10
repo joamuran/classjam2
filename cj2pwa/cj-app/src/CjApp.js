@@ -144,18 +144,22 @@ export class CjApp extends LitElement {
       self.scaleApp();
     }, true)
 
-    this.scaleApp();
+    setTimeout(function(){self.scaleApp();},0);
+       
+
+    //this.scaleApp();
   }
 
   
   scaleApp() {
     // Determinant el factor d'escala
+    console.log("**********");
     let scale = Math.min(
       window.innerWidth / self.gridOptions.defaultWidth,
       window.innerHeight / (self.gridOptions.defaultHeight + self.gridOptions.headerHeight)
     );
 
-    //console.log(window.innerWidth+" "+self.gridOptions.defaultWidth+" "+window.innerHeight+" "+self.gridOptions.defaultHeight+" "+self.gridOptions.headerHeight);
+    console.log(window.innerWidth+" "+self.gridOptions.defaultWidth+" "+window.innerHeight+" "+self.gridOptions.defaultHeight+" "+self.gridOptions.headerHeight);
 
     // Determinant la translació
     let tx, ty;
@@ -163,7 +167,8 @@ export class CjApp extends LitElement {
     ty = Math.floor(((window.innerHeight - (self.gridOptions.defaultHeight + self.gridOptions.headerHeight) * scale) / 2));
 
     // Capturem l'element :host i apliquem els canvis
-    let app = self.shadowRoot.host; // Així accedim a tot el shadow DOM (element cj-app)
+    //let app = self.shadowRoot.host; // Així accedim a tot el shadow DOM (element cj-app)
+    let app = self.shadowRoot.getElementById("appContainer");
     let stringScale = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")";
     console.log(stringScale);
     app.style.transform = stringScale;
@@ -337,6 +342,7 @@ export class CjApp extends LitElement {
 
     return html`
 
+    <div id="appContainer">
     <h1 style="height:${this.gridOptions.headerHeight}px">Class Jam</h1>
     <button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button>
         
@@ -355,7 +361,8 @@ export class CjApp extends LitElement {
       ${this.config.components.map(component => this.renderComponent(component))}
       </paper-grid>
     </div>
-   
+    </div> <!-- end appContainer -->
+
     <!-- Dialog for media play -->
             <dile-modal showCloseIcon 
                 style="--dile-modal-width:1000px; "

@@ -1,5 +1,6 @@
 import { createDefaultConfig } from '@open-wc/building-rollup';
-const babel = require('rollup-plugin-babel');
+//import resolve from '@rollup/plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
 
 // if you need to support IE11 use "modern-and-legacy-config" instead.
 //import { createCompatibilityConfig } from '@open-wc/building-rollup';
@@ -8,6 +9,18 @@ const babel = require('rollup-plugin-babel');
 export default createDefaultConfig(
     {
         input: './index.html',
+        /*plugins:[
+            resolve(),
+            babel({
+                modules: {
+                    'lit-html': ['html']
+                },
+                htmlMinifier: {
+                    removeComments: false
+                }
+
+            })
+        ]*/
         // Deshabilitem babel
         // L'ideal seria utilitzar-lo, i incloure 
         // opcions per a que no faça el removeComments

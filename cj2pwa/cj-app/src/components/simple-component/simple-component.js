@@ -259,8 +259,8 @@ export class SimpleComponent extends LitElement {
 
                 }
             
-            .thumbup{  background-image: url("/assets/img/thumbup.png"); }
-            .thumbdown{ background-image: url("/assets/img/thumbdown.png"); }
+            .thumbup{  background-image: url("assets/img/thumbup.png"); }
+            .thumbdown{ background-image: url("assets/img/thumbdown.png"); }
 
             .selectablePicto{
                 /*width:200px;
@@ -289,7 +289,7 @@ export class SimpleComponent extends LitElement {
                 background-position: center;
                 display: inline-block;
                 transition: all ease 0.3s;
-                background-image: url("/assets/img/PlayContentButton.png"); 
+                background-image: url("assets/img/PlayContentButton.png"); 
             }
 
 

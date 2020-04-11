@@ -114,23 +114,13 @@ Per començar amb la nostra aplicació, ens diu que comencem editant el fitxer s
 
 
 
-
-
-
-
-
-
-
-
-
 // Traducccions:
 
 https://www.webcomponents.org/element/@appnest/lit-translate
 
 
 
-// TO-DO:
+Transpilació amb rollup
 
-- Wip on Estacions de l'any-> Mirar d'ajustar bé els css, com fer-ho responsive, textos inclosos (jugar amb el zoom?)
-- Una vegada fet, far-lo ben parametritzable i crear amb ell el component genèric.
-- Documentar com fer l'aplicació general, les traduccions, etc.
+Pe tal de fer la construcció de l'aplicació. .. rollup-config-...
+

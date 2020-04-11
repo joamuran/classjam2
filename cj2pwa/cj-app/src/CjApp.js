@@ -22,8 +22,11 @@ import './components/weekday-component'
 /* Loading Translations */
 registerTranslateConfig({
   loader: async lang => {
-    const response = await fetch(`/assets/i18n/${lang}.json`);
+    console.log("tr1");
+    const response = await fetch(`assets/i18n/${lang}.json`);
+    console.log("tr2");
     const json = await response.json();
+    console.log("tr3");
     return json;
     // Així no funciona... await fetch(`/assets/i18n/${lang}.json`).then(res => { res.json(); })
   }

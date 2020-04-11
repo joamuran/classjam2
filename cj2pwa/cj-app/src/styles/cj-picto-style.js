@@ -19,131 +19,131 @@ export const CjPictoStyle = css`
     transition: all 0.4s;
     background-position: center;
     overflow: hidden;
-    background-image:url("/assets/img/help.png");
+    background-image:url("assets/img/help.png");
 }        
 
 
 .spring{
-    background-image: url("/assets/img/season-component/spring.png");
+    background-image: url("assets/img/season-component/spring.png");
 }
 
 .summer{
-    background-image: url("/assets/img/season-component/summer.png");
+    background-image: url("assets/img/season-component/summer.png");
 }
 
 .autumn{
-    background-image: url("/assets/img/season-component/autumn.png");
+    background-image: url("assets/img/season-component/autumn.png");
 }
 
 .winter{
-    background-image: url("/assets/img/season-component/winter.png");
+    background-image: url("assets/img/season-component/winter.png");
 }
 
 .sunny{
-    background-image: url("/assets/img/weather-component/sunny.png");
+    background-image: url("assets/img/weather-component/sunny.png");
 }
 
 .partial_sunny{
-    background-image: url("/assets/img/weather-component/partial_sunny.png");
+    background-image: url("assets/img/weather-component/partial_sunny.png");
 }
 
 .partial_cloudy{
-    background-image: url("/assets/img/weather-component/partial_cloudy.png");
+    background-image: url("assets/img/weather-component/partial_cloudy.png");
 }
 
 .cloudy{
-    background-image: url("/assets/img/weather-component/cloudy.png");
+    background-image: url("assets/img/weather-component/cloudy.png");
 }
 .rainy{
-    background-image: url("/assets/img/weather-component/rainy.png");
+    background-image: url("assets/img/weather-component/rainy.png");
 }
 .snow{
-    background-image: url("/assets/img/weather-component/snow.png");
+    background-image: url("assets/img/weather-component/snow.png");
 }
 
 .snow{
-    background-image: url("/assets/img/weather-component/snow.png");
+    background-image: url("assets/img/weather-component/snow.png");
 }
 
 .tempest{
-    background-image: url("/assets/img/weather-component/tempest.png");
+    background-image: url("assets/img/weather-component/tempest.png");
 }
 
 
 .january{
-    background-image: url("/assets/img/month-component/january.png");
+    background-image: url("assets/img/month-component/january.png");
 }
 
 .february{
-    background-image: url("/assets/img/month-component/february.png");
+    background-image: url("assets/img/month-component/february.png");
 }
 
 .march{
-    background-image: url("/assets/img/month-component/march.png");
+    background-image: url("assets/img/month-component/march.png");
 }
 
 .april{
-    background-image: url("/assets/img/month-component/april.png");
+    background-image: url("assets/img/month-component/april.png");
 }
 
 .may{
-    background-image: url("/assets/img/month-component/may.png");
+    background-image: url("assets/img/month-component/may.png");
 }
 
 .june{
-    background-image: url("/assets/img/month-component/june.png");
+    background-image: url("assets/img/month-component/june.png");
 }
 
 .july{
-    background-image: url("/assets/img/month-component/july.png");
+    background-image: url("assets/img/month-component/july.png");
 }
 
 .august{
-    background-image: url("/assets/img/month-component/august.png");
+    background-image: url("assets/img/month-component/august.png");
 }
 
 .september{
-    background-image: url("/assets/img/month-component/september.png");
+    background-image: url("assets/img/month-component/september.png");
 }
 
 .october{
-    background-image: url("/assets/img/month-component/october.png");
+    background-image: url("assets/img/month-component/october.png");
 }
 
 .november{
-    background-image: url("/assets/img/month-component/november.png");
+    background-image: url("assets/img/month-component/november.png");
 }
 
 .december{
-    background-image: url("/assets/img/month-component/december.png");
+    background-image: url("assets/img/month-component/december.png");
 }
 
 .monday{
-    background-image: url("/assets/img/weekday-component/monday.png");
+    background-image: url("assets/img/weekday-component/monday.png");
 }
 
 .tuesday{
-    background-image: url("/assets/img/weekday-component/tuesday.png");
+    background-image: url("assets/img/weekday-component/tuesday.png");
 }
 
 .wednesday{
-    background-image: url("/assets/img/weekday-component/wednesday.png");
+    background-image: url("assets/img/weekday-component/wednesday.png");
 }
 
 .thursday{
-    background-image: url("/assets/img/weekday-component/thursday.png");
+    background-image: url("assets/img/weekday-component/thursday.png");
 }
 
 .friday{
-    background-image: url("/assets/img/weekday-component/friday.png");
+    background-image: url("assets/img/weekday-component/friday.png");
 }
 
 .saturday{
-    background-image: url("/assets/img/weekday-component/saturday.png");
+    background-image: url("assets/img/weekday-component/saturday.png");
 }
 
 .sunday{
-    background-image: url("/assets/img/weekday-component/sunday.png");
+    background-image: url("assets/img/weekday-component/sunday.png");
 }
 
 `;

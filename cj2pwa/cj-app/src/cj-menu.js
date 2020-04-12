@@ -5,6 +5,8 @@ export class CjMenu extends LitElement {
     constructor() {
         super();
         this.menuHidden = true;
+        this.isediting=false;
+        
     }
 
     static get styles() {
@@ -61,34 +63,24 @@ export class CjMenu extends LitElement {
             right: 0px;
         }
 
-        #BtSave, #BtSaveConfig{ background-image: url( assets/img/menu/save.png); z-index: 80;}
-
-        #BtSave{
+        #btSave, #btSaveConfig{ background-image: url(assets/img/menu/save.png); z-index: 80;}
+        
+        #btSave.visible, #btSaveConfig.visible{
             top: 240px;
             right: 0px;
         }
 
-        #BtSaveConfig.visible{
-            top: 240px;
-            right: 0px;
-        }
+        #btExport, #btExportConfig{ background-image: url( assets/img/menu/export.png); z-index: 80;}
 
-
-
-
-        #BtExport, #BtExportConfig{ background-image: url( assets/img/menu/export.png); z-index: 80;}
-
-        #BtExport{
+        #btExport{
             top: 320px;
             right: 0px;
         }
 
-        #BtExportConfig.visible{
+        #btExportConfig.visible{
             top: 320px;
             right: 0px;
         }
-
-
 
         #btOptions{ background-image: url( assets/img/menu/optionsApp.png); z-index: 70;}
         #btOptions.visible{
@@ -134,13 +126,14 @@ export class CjMenu extends LitElement {
         /*return html`
         <button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button>
         `*/
+        console.log("this.isediting: "+this.isediting);
         return html`
         <div id="menuButton" class="controlButton" @click=${function (e) { this.ToggleMenu(e) }}></div>
 			
 			<div id="controlPanel">	
 				<div id="controlPanelPlayer">
 					<div class="controlButton buttonhidden" id="btResetAssembly" title="Start Assembly" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btShowEditMode" title="Edit Mode" i18n="i18n"></div>
+					<div class="controlButton buttonhidden" id="btShowEditMode" title="Edit Mode" @click=${function () { this.toggleEditMode() }}></div>
 					<div class="controlButton buttonhidden" id="btSave" title="Save" i18n="i18n"></div>
 					<div class="controlButton buttonhidden" id="btExport" title="Export" i18n="i18n"></div>
 					<div class="controlButton buttonhidden" id="btQuit" title="Quit" i18n="i18n"></div>
@@ -149,15 +142,14 @@ export class CjMenu extends LitElement {
 					<input type="file" id="importDialog"/-->
 					<!--div class="controlButton buttonhidden" id="btOptions" title="Options"></div-->
 				</div>
-				
 				<div id="controlPanelEdit" style="display:none">
 					<div class="controlButton buttonhidden" id="btOptions" title="Options" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btShowPlayerMode" title="Player Mode" i18n="i18n"></div>
+					<div class="controlButton buttonhidden" id="btShowPlayerMode" title="Player Mode" @click=${function () { this.toggleEditMode() }}></div>
 					<div class="controlButton buttonhidden" id="btSaveConfig" title="Save Config" i18n="i18n"></div>
 					<div class="controlButton buttonhidden" id="btExportConfig" title="Export" i18n="i18n"></div>
 					<div class="controlButton buttonhidden" id="btQuitConfig" title="Quit" i18n="i18n"></div>
 					<div class="controlButton buttonhidden" id="btLlxHelpConfig" title="Help" i18n="i18n"></div>
-				</div>
+                </div>
             </div>
         `;
     }
@@ -168,22 +160,25 @@ showControlPanel() {
     let controlPanel = this.shadowRoot.querySelector("#controlPanel");
     if (controlPanel) controlPanel.style.visibility = "visible";
 
-    let hiddenButtons = this.shadowRoot.querySelector(".controlButton.buttonhidden");
-    if (hiddenButtons) {
-        hiddenButtons.classList.remove("buttonhidden");
-        hiddenButtons.classList.add("visible")
-    };
+    let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.buttonhidden");
+    for (let item of hiddenButtons){
+        console.log(item);
+        item.classList.remove("buttonhidden");
+        item.classList.add("visible");
+        console.log(item);
+    }
+        
 }
 
 hideControlPanel() {
     let controlPanel = this.shadowRoot.querySelector("#controlPanel");
     if (controlPanel) controlPanel.style.visibility = "hidden";
 
-    let hiddenButtons = this.shadowRoot.querySelector(".controlButton.visible");
-    if (hiddenButtons) {
-        hiddenButtons.classList.remove("visible");
-        hiddenButtons.classList.add("buttonhidden");
-    }
+    let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.visible");
+    for (let item of hiddenButtons){
+        item.classList.remove("visible");
+        item.classList.add("buttonhidden");
+    };
 }
 
 
@@ -197,6 +192,15 @@ ToggleMenu(event) {
 }
 
 toggleEditMode() {
+    this.isediting=!this.isediting;
+    if (this.isediting){
+        this.shadowRoot.querySelector("#controlPanelPlayer").style.display="none";
+        this.shadowRoot.querySelector("#controlPanelEdit").style.display="block";
+    } else {
+        this.shadowRoot.querySelector("#controlPanelPlayer").style.display="block";
+        this.shadowRoot.querySelector("#controlPanelEdit").style.display="none";
+    }
+
     this.dispatchEvent(new CustomEvent('toggleEditMode', {
         bubbles: true,
         composed: true/*,

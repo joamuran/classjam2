@@ -19,7 +19,7 @@ export const CjPictoStyle = css`
     transition: all 0.4s;
     background-position: center;
     overflow: hidden;
-    background-image:url("assets/img/help.png");
+    background-image:url("assets/img/menu/help.png");
 }        
 
 

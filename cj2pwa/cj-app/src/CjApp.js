@@ -11,6 +11,9 @@ import { Config } from './config';
 import { CjAppStyle } from './styles/cj-app-style.js';
 import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
+/* Import Menu */
+import './cj-menu'
+
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
@@ -95,65 +98,16 @@ export class CjApp extends LitElement {
     this.hasLoadedStrings = true;
 
 
-    document.addEventListener("playMedia", function (e) {
-      self.mediaUrl = e.detail.url;
-      self.shadowRoot.getElementById("youtubePlayer").open();
-    });
+    // Setting up events
+    this.setEventListeners();
 
-    document.addEventListener("dile-modal-closed", function (e) {
-        // When closing modal, stops youtube player
-        let iframe = self.shadowRoot.getElementById("iframe");
-        let src = "https://www.youtube.com/embed/" + self.mediaUrl;
-        //console.log(src);
-        iframe.setAttribute("src", src);
-    
-    });
-
-
-
-
-
-    document.addEventListener("updateState", function (e) {
-      let component = e.detail.component;
-      let key = e.detail.key;
-      let value = e.detail.value;
-      console.log("updateState");
-      console.log(component + " - " + key + " - " + value);
-      let tmp = self.config;
-      for (let i in tmp.components) {
-        if (tmp.components[i].component == component) {
-          tmp.components[i].componentdata = "{\"" + key + "\":\"" + value + "\"}";
-        }
-
-      }
-
-      /* Per provar si va el patró mediador* /
-      console.log(e.detail.picto);
-      let tmp = self.config;
-      tmp.components[0].componentdata = "{\"season\":\"" + e.detail.picto + "\"}";
-      self.config = tmp;
-      console.log(self.config);
-      */
-      self.config = tmp;
-      console.log(self.config);
-      self.update(); // Amb açò va!
-      //https://julienrenaux.fr/2019/04/01/lit-element-rendering-strategies-explained/
-    });
-
-
-
-
-    window.addEventListener("resize", function () {
-      self.scaleApp();
-    }, true)
-
-    setTimeout(function(){self.scaleApp();},0);
-       
+    // Initial Application scale
+    setTimeout(function () { self.scaleApp(); }, 0);
 
     //this.scaleApp();
-  }
+  } // End ConnectedCallback method
 
-  
+
   scaleApp() {
     // Determinant el factor d'escala
     console.log("**********");
@@ -162,7 +116,7 @@ export class CjApp extends LitElement {
       window.innerHeight / (self.gridOptions.defaultHeight + self.gridOptions.headerHeight)
     );
 
-    console.log(window.innerWidth+" "+self.gridOptions.defaultWidth+" "+window.innerHeight+" "+self.gridOptions.defaultHeight+" "+self.gridOptions.headerHeight);
+    console.log(window.innerWidth + " " + self.gridOptions.defaultWidth + " " + window.innerHeight + " " + self.gridOptions.defaultHeight + " " + self.gridOptions.headerHeight);
 
     // Determinant la translació
     let tx, ty;
@@ -345,9 +299,11 @@ export class CjApp extends LitElement {
 
     return html`
 
+  <cj-menu></cj-menu>
     <div id="appContainer">
     <h1 style="height:${this.gridOptions.headerHeight}px">Class Jam</h1>
-    <button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button>
+
+    <!--button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button-->
         
     <div id="gridContainer" style="transform: scale(0.9); width:${this.gridOptions.defaultWidth}px; height:${this.gridOptions.defaultHeight}px;">
     <paper-grid  animated 
@@ -383,4 +339,85 @@ export class CjApp extends LitElement {
 
     `;
   }
+
+  setListenersForComponents() {
+    /*
+    Events are triggered by webcomponents or litelements, according to
+    mediator pattern, and maneged in App.
+    */
+    let self = this;
+
+    document.addEventListener("playMedia", function (e) {
+      /*
+       * Event playMedia: plays youtube video into #youtubePlayer dialog.
+       * Triggered by: playMedia method in simple-component
+       */
+      self.mediaUrl = e.detail.url;
+      self.shadowRoot.getElementById("youtubePlayer").open();
+    });
+
+    document.addEventListener("dile-modal-closed", function (e) {
+      /*
+       * Event dile-modal-closed: Stops youtube player when closing modal
+       * Triggered by: dile-modal
+       */
+      let iframe = self.shadowRoot.getElementById("iframe");
+      let src = "https://www.youtube.com/embed/" + self.mediaUrl;
+      iframe.setAttribute("src", src);
+
+    });
+
+    document.addEventListener("updateState", function (e) {
+      /*
+       * Event updateState: Updates App state to force its rendering
+       * Triggered by: Every component, after modifying its state
+       */
+      let component = e.detail.component;
+      let key = e.detail.key;
+      let value = e.detail.value;
+      console.log("updateState");
+      console.log(component + " - " + key + " - " + value);
+      let tmp = self.config;
+      for (let i in tmp.components) {
+        if (tmp.components[i].component == component) {
+          tmp.components[i].componentdata = "{\"" + key + "\":\"" + value + "\"}";
+        }
+
+      }
+
+      self.config = tmp;
+      console.log(self.config);
+      self.update(); // Amb açò va!
+      //https://julienrenaux.fr/2019/04/01/lit-element-rendering-strategies-explained/
+    });
+
+  }
+
+  setListenersForMenu() {
+    let self = this;
+
+    document.addEventListener("toggleEditMode", function (e) {
+      self.toggleEditMode();
+    });
+  }
+
+  setEventListeners() {
+    /*
+    Seting up event listeners for entire application
+    */
+    let self = this;
+
+    // Listener for components
+    this.setListenersForComponents();
+
+    // Listeners for menu
+    this.setListenersForMenu();
+
+    // Global listeners
+    window.addEventListener("resize", function () {
+      self.scaleApp();
+    }, true)
+
+  } // end setEventListeners
+
 }

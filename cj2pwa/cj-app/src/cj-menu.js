@@ -1,12 +1,13 @@
 import { LitElement, html, css } from 'lit-element';
+import { translate } from "@appnest/lit-translate"; // i18n
 
 export class CjMenu extends LitElement {
 
     constructor() {
         super();
         this.menuHidden = true;
-        this.isediting=false;
-        
+        this.isediting = false;
+
     }
 
     static get styles() {
@@ -89,6 +90,39 @@ export class CjMenu extends LitElement {
         }
 
 
+        #btSelectLang{ background-image: url(assets/img/menu/lang.png); z-index: 70;}
+        #btSelectLang.visible{
+            top: 320px;
+            right: 0px;
+        }
+
+        .btSelectLangClass:hover{
+            background-color: orange;
+            color: white;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .btSelectLangClass{
+            position: fixed;
+            margin: 10px;
+            background-color: #ffffff;
+            right: 80px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #333333;
+            font-family: sans-serif;
+            font-stretch: condensed !important;
+            font-variant: all-petite-caps;
+            border-radius: 3px;
+            z-index: 70;
+        }
+
+        #btSelectLangCa{ top: 320px; }
+        #btSelectLangEs{ top: 350px; }
+        #btSelectLangEn{ top: 380px; }
+
         #btQuit, #btQuitConfig{ background-image: url( assets/img/menu/quit.png); z-index: 70;}
         #btQuit.visible{
             top: 400px;
@@ -126,89 +160,125 @@ export class CjMenu extends LitElement {
         /*return html`
         <button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button>
         `*/
-        console.log("this.isediting: "+this.isediting);
+        //console.log("this.isediting: " + this.isediting);
         return html`
         <div id="menuButton" class="controlButton" @click=${function (e) { this.ToggleMenu(e) }}></div>
 			
 			<div id="controlPanel">	
 				<div id="controlPanelPlayer">
-					<div class="controlButton buttonhidden" id="btResetAssembly" title="Start Assembly" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btShowEditMode" title="Edit Mode" @click=${function () { this.toggleEditMode() }}></div>
-					<div class="controlButton buttonhidden" id="btSave" title="Save" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btExport" title="Export" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btQuit" title="Quit" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btLlxHelp" title="Help" i18n="i18n"></div>
+					<div class="controlButton buttonhidden" id="btResetAssembly" title=${translate("menu.StartAssembly")} @click=${function () { this.resetAssembly() }}></div>
+					<div class="controlButton buttonhidden" id="btShowEditMode" title=${translate("menu.EditMode")} @click=${function () { this.toggleEditMode() }}></div>
+					<!--div class="controlButton buttonhidden" id="btSave" title=${translate("menu.Save")} @click=${function () { this.saveAssembly() }}></div>
+					<div class="controlButton buttonhidden" id="btExport" title=${translate("menu.Export")}></div-->
+					<div class="controlButton buttonhidden" id="btQuit" title=${translate("menu.Quit")}></div>
+					<!--div class="controlButton buttonhidden" id="btLlxHelp" title=${translate("menu.Help")}></div-->
+
 					<!--input type="file" id="exportDialog" nwsaveas="assemblea.zip" />
 					<input type="file" id="importDialog"/-->
-					<!--div class="controlButton buttonhidden" id="btOptions" title="Options"></div-->
+					<!--div class="controlButton buttonhidden" id="btOptions" title=${translate("menu.Options")}></div-->
 				</div>
 				<div id="controlPanelEdit" style="display:none">
-					<div class="controlButton buttonhidden" id="btOptions" title="Options" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btShowPlayerMode" title="Player Mode" @click=${function () { this.toggleEditMode() }}></div>
-					<div class="controlButton buttonhidden" id="btSaveConfig" title="Save Config" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btExportConfig" title="Export" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btQuitConfig" title="Quit" i18n="i18n"></div>
-					<div class="controlButton buttonhidden" id="btLlxHelpConfig" title="Help" i18n="i18n"></div>
+					<!--div class="controlButton buttonhidden" id="btOptions" title=${translate("menu.Options")}></div-->
+					<div class="controlButton buttonhidden" id="btShowPlayerMode" title=${translate("menu.PlayerMode")} @click=${function () { this.toggleEditMode() }}></div>
+					<!--div class="controlButton buttonhidden" id="btSaveConfig" title=${translate("menu.SaveConfig")} @click=${function () { this.saveAssembly() }}></div-->
+					<!--div class="controlButton buttonhidden" id="btExportConfig" title=${translate("menu.Export")}></div-->
+                    <div class="controlButton buttonhidden" id="btSelectLang" title=${translate("menu.SelectLang")} @click=${function () { this.showLangSelector() }}></div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangCa" title=${translate("menu.ca")} @click=${function () { this.switchLanguage("ca") }}>VA</div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEs" title=${translate("menu.es")} @click=${function () { this.switchLanguage("es") }}>ES</div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEn" title=${translate("menu.en")} @click=${function () { this.switchLanguage("en") }}>EN</div>
+                    
+					<div class="controlButton buttonhidden" id="btQuitConfig" title=${translate("menu.Quit")}></div>
+					<!--div class="controlButton buttonhidden" id="btLlxHelpConfig" title=${translate("menu.Help")}></div-->
                 </div>
             </div>
         `;
     }
 
 
-    
-showControlPanel() {
-    let controlPanel = this.shadowRoot.querySelector("#controlPanel");
-    if (controlPanel) controlPanel.style.visibility = "visible";
 
-    let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.buttonhidden");
-    for (let item of hiddenButtons){
-        console.log(item);
-        item.classList.remove("buttonhidden");
-        item.classList.add("visible");
-        console.log(item);
-    }
-        
-}
+    showControlPanel() {
+        let controlPanel = this.shadowRoot.querySelector("#controlPanel");
+        if (controlPanel) controlPanel.style.visibility = "visible";
 
-hideControlPanel() {
-    let controlPanel = this.shadowRoot.querySelector("#controlPanel");
-    if (controlPanel) controlPanel.style.visibility = "hidden";
+        let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.buttonhidden");
+        for (let item of hiddenButtons) {
+            console.log(item);
+            item.classList.remove("buttonhidden");
+            item.classList.add("visible");
+            console.log(item);
+        }
 
-    let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.visible");
-    for (let item of hiddenButtons){
-        item.classList.remove("visible");
-        item.classList.add("buttonhidden");
-    };
-}
-
-
-ToggleMenu(event) {
-    event.stopPropagation();
-    if (this.menuHidden) { this.showControlPanel(); }
-    else { this.hideControlPanel(); }
-
-    console.log(this.menuHidden);
-    this.menuHidden = !this.menuHidden;
-}
-
-toggleEditMode() {
-    this.isediting=!this.isediting;
-    if (this.isediting){
-        this.shadowRoot.querySelector("#controlPanelPlayer").style.display="none";
-        this.shadowRoot.querySelector("#controlPanelEdit").style.display="block";
-    } else {
-        this.shadowRoot.querySelector("#controlPanelPlayer").style.display="block";
-        this.shadowRoot.querySelector("#controlPanelEdit").style.display="none";
     }
 
-    this.dispatchEvent(new CustomEvent('toggleEditMode', {
-        bubbles: true,
-        composed: true/*,
+    hideControlPanel() {
+        let controlPanel = this.shadowRoot.querySelector("#controlPanel");
+        if (controlPanel) controlPanel.style.visibility = "hidden";
+
+        let hiddenButtons = this.shadowRoot.querySelectorAll(".controlButton.visible");
+        for (let item of hiddenButtons) {
+            item.classList.remove("visible");
+            item.classList.add("buttonhidden");
+        };
+    }
+
+    showLangSelector(){
+        let buttons=this.shadowRoot.querySelectorAll(".btSelectLangClass");
+        let visibility;
+        if (buttons[0].style.visibility=="hidden") visibility="visible"
+        else visibility="hidden";
+
+        for (let i=0;i<buttons.length;i++)
+            buttons[i].style.visibility=visibility;
+    }
+
+    switchLanguage(lang){
+        this.dispatchEvent(new CustomEvent('switchLanguage', {
+            bubbles: true,
+            composed: true,
+            detail: { "lang": lang }
+        }))
+
+        this.showLangSelector(); // To hide lang buttons
+    }
+
+    ToggleMenu(event) {
+        event.stopPropagation();
+        if (this.menuHidden) { this.showControlPanel(); }
+        else { this.hideControlPanel(); }
+
+        console.log(this.menuHidden);
+        this.menuHidden = !this.menuHidden;
+    }
+
+    toggleEditMode() {
+        this.isediting = !this.isediting;
+        if (this.isediting) {
+            this.shadowRoot.querySelector("#controlPanelPlayer").style.display = "none";
+            this.shadowRoot.querySelector("#controlPanelEdit").style.display = "block";
+        } else {
+            this.shadowRoot.querySelector("#controlPanelPlayer").style.display = "block";
+            this.shadowRoot.querySelector("#controlPanelEdit").style.display = "none";
+        }
+
+        // Moderator pattern: Sending event to main class
+        this.dispatchEvent(new CustomEvent('toggleEditMode', {
+            bubbles: true,
+            composed: true/*,
             detail: { url: source }*/
-    }))
-}
+        }))
+    }
 
+    resetAssembly(){
+        // Moderator pattern: Sending event to main class
+        this.dispatchEvent(new CustomEvent('resetAssembly', {
+            bubbles: true,
+            composed: true
+        }))
+    }
 
+    saveAssembly(){
+        console.log("save");
+    }
 
 
 }

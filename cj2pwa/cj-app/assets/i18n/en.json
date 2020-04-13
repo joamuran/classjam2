@@ -2,6 +2,23 @@
   "header": {
     "title": "Class Jam"
   },
+  "menu":{
+    "StartAssembly": "Start Assembly",
+    "EditMode":"Turn Edit Mode",
+    "Save":"Save",
+    "Export":"Export",
+    "Options":"Options",
+    "PlayerMode":"Turn Player Mode",
+    "SaveConfig":"Save Config",
+    "menu.Export":"Export",
+    "Quit":"Quit",
+    "Help":"Help",
+    "SelectLang":"Select Language",
+    "ca":"Valencià",
+    "en": "Anglès",
+    "es": "Castellà"
+
+  },
   "component": {
     "verify": "Is it right?"
   },

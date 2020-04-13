@@ -51,7 +51,11 @@ export class CjApp extends LitElement {
     self = this;
 
     this.editMode = false;
-    this.config = Config;       // Caldria obtindre-la via ajax
+
+    this.config = Config;       // Caldria obtindre-la via ajax (o bé pel localStorage)
+    if (localStorage.getItem("cj-assembly") !== null)
+      this.config = JSON.parse(localStorage.getItem("cj-assembly"));
+
     this.hasLoadedStrings = false;  // Per a i18n, indica si s'han carregat les traduccions
     this.currentLang = "ca";
     this.gridOptions = {
@@ -203,6 +207,8 @@ export class CjApp extends LitElement {
 */
 
   renderComponent(component) {
+    //console.log("row: "+component.row+" col:"+component.col);
+    //console.log(this.shadowRoot.getElementById("grid"));
     if (component.componentvisibility == "false") return;
     switch (component.component) {
       case "seasonComponent":
@@ -285,12 +291,18 @@ export class CjApp extends LitElement {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+
+    /*if (!this.editMode) {
+      localStorage.setItem("cj-assembly", JSON.stringify(this.config));
+    }*/
   }
 
 
 
   render() {
     console.log("renderApp");
+    this.storeAssembly();
+
     let cellDimensions = Math.min(this.gridOptions.defaultWidth / this.gridOptions.cols,
       this.gridOptions.defaultWidth / this.gridOptions.rows);
 
@@ -335,6 +347,26 @@ export class CjApp extends LitElement {
 
 
     `;
+  }
+
+  storeAssembly(){
+    
+    //localStorage.setItem("cj-assembly", JSON.stringify(this.config));
+    console.log("***********");
+    let config=this.config;
+    let grid=this.shadowRoot.getElementById("grid");
+    if (grid==null) return;
+    let gridItems=grid.serialize();
+
+    for (let i=0; i<config.components.length; i++){
+      config.components[i].row=gridItems[i].row;
+      config.components[i].col=gridItems[i].col;
+      config.components[i].size_x=gridItems[i].width;
+      config.components[i].size_y=gridItems[i].height;      
+    }
+    
+    localStorage.setItem("cj-assembly", JSON.stringify(config));
+
   }
 
   setListenersForComponents() {
@@ -383,7 +415,7 @@ export class CjApp extends LitElement {
       }
 
       self.config = tmp;
-      console.log(self.config);
+      //console.log(self.config);
       self.update(); // Amb açò va!
       //https://julienrenaux.fr/2019/04/01/lit-element-rendering-strategies-explained/
     });
@@ -396,6 +428,31 @@ export class CjApp extends LitElement {
     document.addEventListener("toggleEditMode", function (e) {
       self.toggleEditMode();
     });
+
+    document.addEventListener("resetAssembly", function (e) {
+      for (let i in self.config.components){
+        console.log("*********"+i);
+        let data=JSON.parse(self.config.components[i].componentdata);
+        let key=Object.keys(data)[0];
+        // Clean data
+        data[key]="";
+        self.config.components[i].componentdata=JSON.stringify(data);
+      }
+
+      // Update component
+      self.update();
+    });
+    
+
+
+    document.addEventListener("switchLanguage", function (e) {
+      console.log(e.detail.lang);
+      self.currentLang=e.detail.lang;
+      use(self.currentLang);
+    });
+
+
+
   }
 
   setEventListeners() {

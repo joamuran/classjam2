@@ -170,6 +170,12 @@ export class CjMenu extends LitElement {
 					<div class="controlButton buttonhidden" id="btShowEditMode" title=${translate("menu.EditMode")} @click=${function () { this.toggleEditMode() }}></div>
 					<!--div class="controlButton buttonhidden" id="btSave" title=${translate("menu.Save")} @click=${function () { this.saveAssembly() }}></div>
 					<div class="controlButton buttonhidden" id="btExport" title=${translate("menu.Export")}></div-->
+
+                    <div class="controlButton buttonhidden" id="btSelectLang" title=${translate("menu.SelectLang")} @click=${function () { this.showLangSelector() }}></div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangCa" title=${translate("menu.ca")} @click=${function () { this.switchLanguage("ca") }}>VA</div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEs" title=${translate("menu.es")} @click=${function () { this.switchLanguage("es") }}>ES</div>
+                    <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEn" title=${translate("menu.en")} @click=${function () { this.switchLanguage("en") }}>EN</div>
+                    
 					<div class="controlButton buttonhidden" id="btQuit" title=${translate("menu.Quit")}></div>
 					<!--div class="controlButton buttonhidden" id="btLlxHelp" title=${translate("menu.Help")}></div-->
 
@@ -182,6 +188,7 @@ export class CjMenu extends LitElement {
 					<div class="controlButton buttonhidden" id="btShowPlayerMode" title=${translate("menu.PlayerMode")} @click=${function () { this.toggleEditMode() }}></div>
 					<!--div class="controlButton buttonhidden" id="btSaveConfig" title=${translate("menu.SaveConfig")} @click=${function () { this.saveAssembly() }}></div-->
 					<!--div class="controlButton buttonhidden" id="btExportConfig" title=${translate("menu.Export")}></div-->
+                    
                     <div class="controlButton buttonhidden" id="btSelectLang" title=${translate("menu.SelectLang")} @click=${function () { this.showLangSelector() }}></div>
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangCa" title=${translate("menu.ca")} @click=${function () { this.switchLanguage("ca") }}>VA</div>
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEs" title=${translate("menu.es")} @click=${function () { this.switchLanguage("es") }}>ES</div>

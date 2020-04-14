@@ -1,5 +1,77 @@
 {
   "header": {
-    "title": "Class Jam: L'assemblea d'aula" 
+    "title": "Class Jam: L'assemblea d'aula"
+  },
+  "menu": {
+    "StartAssembly": "Inicia l'Assemblea",
+    "EditMode": "Activa el mode d'edició",
+    "Save": "Guarda",
+    "Export": "Exporta",
+    "Options": "Opcions",
+    "PlayerMode": "Actuiva el mode Assemblea",
+    "SaveConfig": "Guarda",
+    "menu.Export": "Exporta",
+    "Quit": "Ix",
+    "Help": "Ajuda",
+    "SelectLang": "Selecciona l'idioma",
+    "ca": "Valencià",
+    "en": "Anglès",
+    "es": "Castellà"
+  },
+  "component": {
+    "verify": "És correcte?"
+  },
+  "season-component": {
+    "title": "Estació de l'any",
+    "question": "En quina estació estem?",
+    "spring": "Primavera",
+    "summer": "Estiu",
+    "winter": "Hivern",
+    "autumn": "Tardor",
+    "undefined": " ",
+    "": " "
+  },
+  "weather-component": {
+    "title": "L'oratge",
+    "question": "Quin temps fa?",
+    "sunny": "Sol",
+    "partial_sunny": "Sol amb núvols",
+    "partial_cloudy": "Núvols",
+    "cloudy": "Molts núvols",
+    "rainy": "Hui plou",
+    "snow": "Hui neva",
+    "tempest": "Hui trona",
+    "undefined": " ",
+    "": " "
+  },
+  "month-component": {
+    "title": "Mes de l'any",
+    "question": "En quin mes estem?",
+    "january": "gener",
+    "february": "febrer",
+    "march": "març",
+    "april": "abril",
+    "may": "maig",
+    "june": "juny",
+    "july": "juliol",
+    "august": "augost",
+    "september": "setembre",
+    "october": "octuber",
+    "november": "novembre",
+    "december": "decembre",
+    "undefined": " ",
+    "": " "
+  },
+  "weekday-component": {
+    "title": "Dia de la setmana",
+    "question": "Quin dia és hui?",
+    "monday": "Dilluns",
+    "tuesday": "Dimarts",
+    "wednesday": "Dimecres",
+    "thursday": "Dijous",
+    "friday": "Divendres",
+    "saturday": "Dissabte",
+    "sunday": "Diumenge",
+    "": " "
   }
 }

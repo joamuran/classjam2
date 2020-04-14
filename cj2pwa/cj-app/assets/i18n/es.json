@@ -1,0 +1,77 @@
+{
+  "header": {
+    "title": "Class Jam: Asamblea de aula"
+  },
+  "menu": {
+    "StartAssembly": "Empieza la asamblea",
+    "EditMode": "Activa el modo de edición",
+    "Save": "Guardar",
+    "Export": "Exportar",
+    "Options": "Opciones",
+    "PlayerMode": "Activa el modo asamblea",
+    "SaveConfig": "Guarda la configuración",
+    "menu.Export": "Exporta",
+    "Quit": "Salir",
+    "Help": "Ayuda",
+    "SelectLang": "Selecciona el idioma",
+    "ca": "Valenciano",
+    "en": "Inglés",
+    "es": "Castellano"
+  },
+  "component": {
+    "verify": "Es correcto?"
+  },
+  "season-component": {
+    "title": "Estación del año",
+    "question": "En qué estación estamos?",
+    "spring": "Primavera",
+    "summer": "Verano",
+    "winter": "Invierno",
+    "autumn": "Otoño",
+    "undefined": " ",
+    "": " "
+  },
+  "weather-component": {
+    "title": "El tiempo",
+    "question": "¿Qué tiempo hace hoy?",
+    "sunny": "Sol",
+    "partial_sunny": "Sol con nubes",
+    "partial_cloudy": "Nuboso",
+    "cloudy": "Muy nuboso",
+    "rainy": "Hoy llueve",
+    "snow": "Hoy nieva",
+    "tempest": "Tempest",
+    "undefined": " ",
+    "": " "
+  },
+  "month-component": {
+    "title": "Mes",
+    "question": "¿En qué mes estamos?",
+    "january": "Enero",
+    "february": "Febrero",
+    "march": "Marzo",
+    "april": "Abril",
+    "may": "Mayo",
+    "june": "Junio",
+    "july": "Julio",
+    "august": "Agosto",
+    "september": "Septiembre",
+    "october": "Octubre",
+    "november": "Noviembre",
+    "december": "Diciembre",
+    "undefined": " ",
+    "": " "
+  },
+  "weekday-component": {
+    "title": "El dia de la semana",
+    "question": "¿Qué dia es hoy?",
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "": " "
+  }
+}

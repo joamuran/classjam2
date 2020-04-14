@@ -7,6 +7,7 @@ export class CjMenu extends LitElement {
         super();
         this.menuHidden = true;
         this.isediting = false;
+        this.tr=translate;
 
     }
 
@@ -176,7 +177,7 @@ export class CjMenu extends LitElement {
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEs" title=${translate("menu.es")} @click=${function () { this.switchLanguage("es") }}>ES</div>
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEn" title=${translate("menu.en")} @click=${function () { this.switchLanguage("en") }}>EN</div>
                     
-					<div class="controlButton buttonhidden" id="btQuit" title=${translate("menu.Quit")}></div>
+					<div class="controlButton buttonhidden" id="btQuit" title=${translate("menu.Quit")} @click=${function () { this.exitApp() }}></div>
 					<!--div class="controlButton buttonhidden" id="btLlxHelp" title=${translate("menu.Help")}></div-->
 
 					<!--input type="file" id="exportDialog" nwsaveas="assemblea.zip" />
@@ -194,7 +195,7 @@ export class CjMenu extends LitElement {
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEs" title=${translate("menu.es")} @click=${function () { this.switchLanguage("es") }}>ES</div>
                     <div class="btSelectLangClass" style="visibility: hidden;" id="btSelectLangEn" title=${translate("menu.en")} @click=${function () { this.switchLanguage("en") }}>EN</div>
                     
-					<div class="controlButton buttonhidden" id="btQuitConfig" title=${translate("menu.Quit")}></div>
+					<div class="controlButton buttonhidden" id="btQuitConfig" title=${translate("menu.Quit")} @click=${function () { this.exitApp() }}></div>
 					<!--div class="controlButton buttonhidden" id="btLlxHelpConfig" title=${translate("menu.Help")}></div-->
                 </div>
             </div>
@@ -283,10 +284,19 @@ export class CjMenu extends LitElement {
         }))
     }
 
+    exitApp(){
+        /*console.log(this.tr("month-component.title"));
+        console.log(this.tr("menu.confirmexit"));
+        let confirmation=confirm(translate("menu.confirmexit"));*/
+        let confirmation=confirm("Desitgeu eixir?");
+        if (confirmation) document.location="/";   
+    }
+
     saveAssembly(){
         console.log("save");
     }
 
+    
 
 }
 customElements.define('cj-menu', CjMenu);

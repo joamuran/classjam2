@@ -16,7 +16,8 @@
     "SelectLang": "Selecciona l'idioma",
     "ca": "Valencià",
     "en": "Anglès",
-    "es": "Castellà"
+    "es": "Castellà",
+    "confirmexit":"Voleu eixir de l'Assemblea?"
   },
   "component": {
     "verify": "És correcte?"

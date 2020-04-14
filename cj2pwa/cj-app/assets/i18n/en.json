@@ -16,7 +16,8 @@
     "SelectLang":"Select Language",
     "ca":"Valencià",
     "en": "Anglès",
-    "es": "Castellà"
+    "es": "Castellà",
+    "confirmexit":"Do you want to exit Class Jam?"
 
   },
   "component": {

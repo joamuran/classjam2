@@ -16,7 +16,8 @@
     "SelectLang": "Selecciona el idioma",
     "ca": "Valenciano",
     "en": "Inglés",
-    "es": "Castellano"
+    "es": "Castellano",
+    "confirmexit":"¿Desea salir de la asamblea?"
   },
   "component": {
     "verify": "Es correcto?"

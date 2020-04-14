@@ -57,7 +57,11 @@ export class CjApp extends LitElement {
       this.config = JSON.parse(localStorage.getItem("cj-assembly"));
 
     this.hasLoadedStrings = false;  // Per a i18n, indica si s'han carregat les traduccions
+
     this.currentLang = "ca";
+    if (localStorage.getItem("cj-lang") !== null)
+      this.currentLang = localStorage.getItem("cj-lang");
+    
     this.gridOptions = {
       cols: 12,
       rows: 7,
@@ -95,7 +99,7 @@ export class CjApp extends LitElement {
 
     super.connectedCallback();
     //console.log("ab");
-    await use("en");
+    await use(this.currentLang);
     this.hasLoadedStrings = true;
 
 
@@ -448,6 +452,7 @@ export class CjApp extends LitElement {
     document.addEventListener("switchLanguage", function (e) {
       console.log(e.detail.lang);
       self.currentLang=e.detail.lang;
+      localStorage.setItem("cj-lang", self.currentLang);
       use(self.currentLang);
     });
 

@@ -4,6 +4,8 @@ import '@fluidnext-polymer/paper-grid';                 // Paper-grid: Grid Layo
 import { registerTranslateConfig, use, translate, get } // i18n: https://www.webcomponents.org/element/@appnest/lit-translate
   from "@appnest/lit-translate";
 
+//import {render} from 'lit-html';
+
 /* Default configurations */
 import { Config } from './config';
 
@@ -11,14 +13,16 @@ import { Config } from './config';
 import { CjAppStyle } from './styles/cj-app-style.js';
 import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
-/* Import Menu */
+/* Import Menu and dialogs*/
 import './cj-menu'
+import {CjYoutubeDialog} from './cj-media-dialog'
 
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
 import './components/month-component'
 import './components/weekday-component'
+import { CjMediaDialog } from './cj-media-dialog';
 
 
 
@@ -61,7 +65,7 @@ export class CjApp extends LitElement {
     this.currentLang = "ca";
     if (localStorage.getItem("cj-lang") !== null)
       this.currentLang = localStorage.getItem("cj-lang");
-    
+
     this.gridOptions = {
       cols: 12,
       rows: 7,
@@ -312,7 +316,23 @@ export class CjApp extends LitElement {
 
     return html`
 
-  <cj-menu></cj-menu>
+    <!--cj-media-dialog>
+    <div slot="content">
+      <h1>hola ke ase</h1>
+    <iframe name="content" width="100%" height="700" id="iframe"
+                    src="https://www.youtube.com/embed/dAALIxJanVM?autoplay=1" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+
+                    <p>adios</p>
+    
+    </iframe>
+    </div>
+
+    </cj-media-dialog-->
+    
+    <cj-menu></cj-menu>
     <div id="appContainer">
     <h1 style="height:${this.gridOptions.headerHeight}px">Class Jam</h1>
 
@@ -353,22 +373,22 @@ export class CjApp extends LitElement {
     `;
   }
 
-  storeAssembly(){
-    
+  storeAssembly() {
+
     //localStorage.setItem("cj-assembly", JSON.stringify(this.config));
     console.log("***********");
-    let config=this.config;
-    let grid=this.shadowRoot.getElementById("grid");
-    if (grid==null) return;
-    let gridItems=grid.serialize();
+    let config = this.config;
+    let grid = this.shadowRoot.getElementById("grid");
+    if (grid == null) return;
+    let gridItems = grid.serialize();
 
-    for (let i=0; i<config.components.length; i++){
-      config.components[i].row=gridItems[i].row;
-      config.components[i].col=gridItems[i].col;
-      config.components[i].size_x=gridItems[i].width;
-      config.components[i].size_y=gridItems[i].height;      
+    for (let i = 0; i < config.components.length; i++) {
+      config.components[i].row = gridItems[i].row;
+      config.components[i].col = gridItems[i].col;
+      config.components[i].size_x = gridItems[i].width;
+      config.components[i].size_y = gridItems[i].height;
     }
-    
+
     localStorage.setItem("cj-assembly", JSON.stringify(config));
 
   }
@@ -386,9 +406,22 @@ export class CjApp extends LitElement {
        * Triggered by: playMedia method in simple-component
        */
       self.mediaUrl = e.detail.url;
-      self.shadowRoot.getElementById("youtubePlayer").open();
-    });
+      //self.shadowRoot.getElementById("youtubePlayer").open();
 
+      //let cjMediaDialog = document.createElement("cj-media-dialog");
+            
+      let myDialog = new CjYoutubeDialog(self.mediaUrl);
+      let ret=myDialog.open();
+
+      ret.then(function(response){
+        console.log(response);
+        console.log("Tralari");
+        myDialog=null
+      });
+          
+      
+    });
+    
     document.addEventListener("dile-modal-closed", function (e) {
       /*
        * Event dile-modal-closed: Stops youtube player when closing modal
@@ -434,24 +467,24 @@ export class CjApp extends LitElement {
     });
 
     document.addEventListener("resetAssembly", function (e) {
-      for (let i in self.config.components){
-        console.log("*********"+i);
-        let data=JSON.parse(self.config.components[i].componentdata);
-        let key=Object.keys(data)[0];
+      for (let i in self.config.components) {
+        console.log("*********" + i);
+        let data = JSON.parse(self.config.components[i].componentdata);
+        let key = Object.keys(data)[0];
         // Clean data
-        data[key]="";
-        self.config.components[i].componentdata=JSON.stringify(data);
+        data[key] = "";
+        self.config.components[i].componentdata = JSON.stringify(data);
       }
 
       // Update component
       self.update();
     });
-    
+
 
 
     document.addEventListener("switchLanguage", function (e) {
       console.log(e.detail.lang);
-      self.currentLang=e.detail.lang;
+      self.currentLang = e.detail.lang;
       localStorage.setItem("cj-lang", self.currentLang);
       use(self.currentLang);
     });

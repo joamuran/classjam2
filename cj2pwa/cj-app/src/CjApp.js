@@ -15,14 +15,14 @@ import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
 /* Import Menu and dialogs*/
 import './cj-menu'
-import {CjYoutubeDialog} from './cj-media-dialog'
+import {CjYoutubeDialog} from 'lib/cj-dialogs/cj-media-dialog'
 
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
 import './components/month-component'
 import './components/weekday-component'
-import { CjMediaDialog } from './cj-media-dialog';
+import { CjMediaDialog } from './lib/cj-dialogs/cj-media-dialog';
 
 
 

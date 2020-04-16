@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
-import {cjQuestionDialog} from './cj-media-dialog'
+import {cjQuestionDialog} from 'lib/cj-dialogs/cj-media-dialog'
 
 export class CjMenu extends LitElement {
 

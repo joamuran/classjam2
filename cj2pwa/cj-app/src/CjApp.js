@@ -15,7 +15,7 @@ import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
 /* Import Menu and dialogs*/
 import './cj-menu'
-import {CjYoutubeDialog} from 'lib/cj-dialogs/cj-media-dialog'
+import {CjYoutubeDialog} from './lib/cj-dialogs/cj-media-dialog'
 
 /* Components import */
 import './components/season-component'

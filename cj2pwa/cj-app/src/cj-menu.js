@@ -1,7 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
-import {cjQuestionDialog} from 'lib/cj-dialogs/cj-media-dialog'
+import {cjConfirm} from './lib/cj-dialogs/cj-confirm'
+
 
 export class CjMenu extends LitElement {
 
@@ -295,10 +296,16 @@ export class CjMenu extends LitElement {
         /*let confirmation=confirm("Desitgeu eixir?");
         if (confirmation) document.location="/";   */
 
-        let myConfirm=new cjQuestionDialog("Desitgeu eixir?");
+        let myConfirm=new cjConfirm({
+            "header": "Quit",
+            "text": "Do you really want to exit",
+            "BtSuccess": "Yes",
+            "BtCancel":"No"
+        });
+        
         let response=myConfirm.open();
         response.then(function(a){
-            console.log("En el then");
+            console.log("Response...");
             console.log(a);
         });
 

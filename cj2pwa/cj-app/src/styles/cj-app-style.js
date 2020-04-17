@@ -30,7 +30,5 @@ export const CjAppStyle = css`
   height: 750px;
 }
 
-h1{
-  margin: 0px; padding: 0px;
-}
+
 `;

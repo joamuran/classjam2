@@ -88,7 +88,7 @@ export class CjApp extends LitElement {
 
   shouldUpdate(changedProperties) {
     // Mètode shouldUpdate: https://lit-element.polymer-project.org/guide/lifecycle#shouldupdate
-    // Constrola si s'ha de realitzar una actualització. Per defecte sempre
+    // Controla si s'ha de realitzar una actualització. Per defecte sempre
     // torna true, però podem modificar-lo per indicar quins canvis en les
     // propietats deurien provocar una actualització.
     //return true;

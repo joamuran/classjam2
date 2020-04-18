@@ -17,8 +17,10 @@
     "ca":"Valencià",
     "en": "Anglès",
     "es": "Castellà",
-    "confirmexit":"Do you want to exit Class Jam?"
-
+    "confirmexit":"Do you want to exit Class Jam?",
+    "quit":"Quit",
+    "yes":"Yes",
+    "no":"No"
   },
   "component": {
     "verify": "Is it right?"

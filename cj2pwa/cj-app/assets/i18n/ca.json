@@ -17,7 +17,11 @@
     "ca": "Valencià",
     "en": "Anglès",
     "es": "Castellà",
-    "confirmexit":"Voleu eixir de l'Assemblea?"
+    "confirmexit":"Voleu eixir de l'Assemblea?",
+    "quit":"Eixir",
+    "yes":"Sí",
+    "no":"No"
+    
   },
   "component": {
     "verify": "És correcte?"

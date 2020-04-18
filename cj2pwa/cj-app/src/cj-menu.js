@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
-import {cjConfirm} from './lib/cj-dialogs/cj-confirm'
+import { cjConfirm } from './lib/cj-dialogs/cj-confirm'
 
 
 export class CjMenu extends LitElement {
@@ -10,7 +10,7 @@ export class CjMenu extends LitElement {
         super();
         this.menuHidden = true;
         this.isediting = false;
-        this.tr=translate;
+        this.tr = translate;
 
     }
 
@@ -232,17 +232,17 @@ export class CjMenu extends LitElement {
         };
     }
 
-    showLangSelector(){
-        let buttons=this.shadowRoot.querySelectorAll(".btSelectLangClass");
+    showLangSelector() {
+        let buttons = this.shadowRoot.querySelectorAll(".btSelectLangClass");
         let visibility;
-        if (buttons[0].style.visibility=="hidden") visibility="visible"
-        else visibility="hidden";
+        if (buttons[0].style.visibility == "hidden") visibility = "visible"
+        else visibility = "hidden";
 
-        for (let i=0;i<buttons.length;i++)
-            buttons[i].style.visibility=visibility;
+        for (let i = 0; i < buttons.length; i++)
+            buttons[i].style.visibility = visibility;
     }
 
-    switchLanguage(lang){
+    switchLanguage(lang) {
         this.dispatchEvent(new CustomEvent('switchLanguage', {
             bubbles: true,
             composed: true,
@@ -279,7 +279,7 @@ export class CjMenu extends LitElement {
         }))
     }
 
-    resetAssembly(){
+    resetAssembly() {
         // Moderator pattern: Sending event to main class
         this.dispatchEvent(new CustomEvent('resetAssembly', {
             bubbles: true,
@@ -287,36 +287,33 @@ export class CjMenu extends LitElement {
         }))
     }
 
-    exitApp(){
+    exitApp() {
         /*console.log(this.tr("month-component.title"));
         console.log(this.tr("menu.confirmexit"));
         let confirmation=confirm(translate("menu.confirmexit"));*/
-        
-        
+
         /*let confirmation=confirm("Desitgeu eixir?");
         if (confirmation) document.location="/";   */
 
-        let myConfirm=new cjConfirm({
-            "header": "Quit",
-            "text": "Do you really want to exit",
-            "BtSuccess": "Yes",
-            "BtCancel":"No"
-        });
-        
-        let response=myConfirm.open();
-        response.then(function(a){
-            console.log("Response...");
-            console.log(a);
+        let myConfirm = new cjConfirm({
+            "header": translate("menu.quit"),
+            "text": translate("menu.confirmexit"),
+            "BtSuccess": translate("menu.yes"),
+            "BtCancel": translate("menu.no")
         });
 
-
+        let response = myConfirm.open();
+        response.then(function (response) {
+            if (response) document.location = "/";
+            else myConfirm.close();
+        });
     }
 
-    saveAssembly(){
+    saveAssembly() {
         console.log("save");
     }
 
-    
+
 
 }
 customElements.define('cj-menu', CjMenu);

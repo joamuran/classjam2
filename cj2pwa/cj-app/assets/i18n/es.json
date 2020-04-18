@@ -17,7 +17,10 @@
     "ca": "Valenciano",
     "en": "Inglés",
     "es": "Castellano",
-    "confirmexit":"¿Desea salir de la asamblea?"
+    "confirmexit":"¿Desea salir de la asamblea?",
+    "quit":"Salir",
+    "yes":"Si",
+    "no":"No"
   },
   "component": {
     "verify": "Es correcto?"

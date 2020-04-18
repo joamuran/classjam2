@@ -47,11 +47,11 @@ export class cjConfirm {
 
             <div class="cjButtonPanel">
                 <button class="cjBt cjBtGreen" @click=${function (e) {
-                        console.log("Clicked on Yes");
+                        //console.log("Clicked on Yes");
                         res(true);
                     }}>${this.content.BtSuccess}</button>
                 <button class="cjBt cjBtRed" @click=${function (e) {
-                        console.log("Clicked on No");
+                        //console.log("Clicked on No");
                         res(false);
                     }}>${this.content.BtCancel}</button>
             </div>
@@ -61,18 +61,26 @@ export class cjConfirm {
         console.log(content);
         //render(content, this.cjDialog);
         //document.body.appendChild(this.cjDialog);
-        let child=document.createElement("cj-dialog");
-        child.setAttribute("width", 50);
-        child.setAttribute("height", 50);
         
-        render(content, child);
-        document.body.appendChild(child);
+        /*let child=document.createElement("cj-dialog");
+        child.setAttribute("width", 50);
+        child.setAttribute("height", 50);*/
+        this.Dialog=document.createElement("cj-dialog");
+        this.Dialog.setAttribute("width", 50);
+        this.Dialog.setAttribute("height", 50);
+        
+        render(content, this.Dialog);
+        document.body.appendChild(this.Dialog);
         
 
 
         console.log(ret);
         return ret;
 
+    }
+
+    close(){
+        this.Dialog.close();
     }
 
 }

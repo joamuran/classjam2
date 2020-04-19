@@ -15,7 +15,6 @@ p{
 .cjBt {
   border: none;
   color: white;
-  padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -30,16 +29,16 @@ p{
 
 .cjBtGreen {
   background-color: #4CAF50;
-  position: absolute;
-  bottom: 20px;
+  /*position: absolute;
+  bottom: 20px;*/
   left: 20%;
   
 }
 
 .cjBtRed {
   background-color: #f44336;
-  position: absolute;
-  bottom: 20px;
+  */position: absolute;
+  bottom: 20px;*/
   right: 20%;
 }
 
@@ -49,7 +48,10 @@ h1{
 
 .cjButtonPanel{
   background-color: #dddddd;
-  height: 20%;
+  /*height: 20%;*/
+  padding: 15px 0px;
   width: 100%;
+  position: absolute;
+  bottom: 0px;
 }
 `;

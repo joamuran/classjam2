@@ -20,7 +20,8 @@
     "confirmexit":"Do you want to exit Class Jam?",
     "quit":"Quit",
     "yes":"Yes",
-    "no":"No"
+    "no":"No",
+    "close":"Close"
   },
   "component": {
     "verify": "Is it right?"

@@ -15,14 +15,14 @@ import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
 /* Import Menu and dialogs*/
 import './cj-menu'
-import {CjYoutubeDialog} from './lib/cj-dialogs/cj-media-dialog'
+import { CjYoutubeDialog } from './lib/cj-dialogs/cj-youtube-dialog'
 
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
 import './components/month-component'
 import './components/weekday-component'
-import { CjMediaDialog } from './lib/cj-dialogs/cj-media-dialog';
+/*import { CjMediaDialog } from './lib/cj-dialogs/cj-media-dialog';*/
 
 
 
@@ -409,19 +409,21 @@ export class CjApp extends LitElement {
       //self.shadowRoot.getElementById("youtubePlayer").open();
 
       //let cjMediaDialog = document.createElement("cj-media-dialog");
-            
-      let myDialog = new CjYoutubeDialog(self.mediaUrl);
-      let ret=myDialog.open();
 
-      ret.then(function(response){
-        console.log(response);
-        console.log("Tralari");
-        myDialog=null
+      let myDialog = new CjYoutubeDialog(
+        {
+          url: self.mediaUrl,
+          BtCancel: translate("menu.close")
+        });
+      let ret = myDialog.open();
+
+      // Realment no fa falta, no esperem q torne res...
+      ret.then(function () {
+        myDialog.close();
       });
-          
-      
+
     });
-    
+
     document.addEventListener("dile-modal-closed", function (e) {
       /*
        * Event dile-modal-closed: Stops youtube player when closing modal

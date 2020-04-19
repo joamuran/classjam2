@@ -20,7 +20,8 @@
     "confirmexit":"¿Desea salir de la asamblea?",
     "quit":"Salir",
     "yes":"Si",
-    "no":"No"
+    "no":"No",
+    "close":"Cierra"
   },
   "component": {
     "verify": "Es correcto?"

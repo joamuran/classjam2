@@ -20,7 +20,8 @@
     "confirmexit":"Voleu eixir de l'Assemblea?",
     "quit":"Eixir",
     "yes":"Sí",
-    "no":"No"
+    "no":"No",
+    "close":"Tanca"
     
   },
   "component": {

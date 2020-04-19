@@ -1,164 +1,98 @@
-import { LitElement, html, css } from 'lit-element';
-import { render } from 'lit-html';
-
-export class CjMediaDialog extends LitElement {
-
-    static get properties() {
-        return {
-            visible: { type: Boolean },
-            id: { type: Number }
-        }
-    }
-
-    constructor(id) {
-        super();
-        this.id = id;
-    }
-
-
-    static get styles() {
-        return css`
-            :host {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                background-color: #000000;
-                top: 0px;
-                left: 0px;
-                z-index: 200;
-            }
-
-            .dialog{
-                background-color: #ffffff;
-                position: absolute;
-            }
-
-            .full{
-                width: 100%;
-                height: 100%;
-            }
-            `
-    }
-
-    render() {
-        return html`
-        <div class="dialog full">
-            <button id="closeDiaog" @click=${function () {
-
-                this.dispatchEvent(new CustomEvent('closedDialog', {
-                    bubbles: true,
-                    composed: true,
-                    detail: { "id": this.id }
-                }));
-
-                this.parentNode.removeChild(this);
-            }}></button>
-            <slot name="content"></slot>
-        </div>
-        `;
-    }
-
-
-}
-customElements.define('cj-media-dialog', CjMediaDialog);
-
-
+import { render, html } from 'lit-html';
+import { CjDialog } from './cj-dialog';
+import { cjDialogStyle } from './dialog.css';
 
 export class CjYoutubeDialog {
-    constructor(url) {
-        this.url = url;
-        this.id = Date.now();
-        this.cjMediaDialog = null;
-    }
+    constructor(content) {
+        let self=this;
+        this.content = {};
+        this.content.url = content.url;
 
-    getId() {
-        return this.id;
-    }
+        this.content.header = "Getting video info..";
 
-    open() {
-        self = this;
+        typeof(content.BtCancel)!="undefined" ?
+         this.content.BtCancel=content.BtCancel :
+          this.content.BtCancel="Close";
+        
+        /*this.getYoutubeInfo(content.url).then(function(data){
+            alert(data.title);
+        });*/
 
-        this.cjMediaDialog = new CjMediaDialog(this.id);
-        let content = html`<div slot="content">
-          <h1>hola ke ase</h1>
-          <iframe name="content" width="100%" height="700" id="iframe"
-                    src="https://www.youtube.com/embed/${this.url}?autoplay=1" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-
-                    <p>adios</p>
-          </iframe>
-          </div>`
-
-        let ret = new Promise(function (resolve, reject) {
-            function handleEvent(e) {
-                self.cjMediaDialog = null;
-                // Check object id 
-
-                if (e.detail.id == self.id) {
-                    // Resolem la promesa per inforar qui ha creat el diàleg que aquest s'ha tancat
-                    console.log("resolent promise " + e.detail.id);
-                    console.log("pajarito");
-                    resolve(true);
-                }
-            }
-
-            document.removeEventListener("closedDialog", handleEvent, false);
-            document.addEventListener("closedDialog", handleEvent, false);
+        let p=this.getYoutubeInfo(content.url);
+        p.then(function(data){
+            //console.log (data.items[0].snippet.title);
+            self.content.header = data.items[0].snippet.title;
+            self.Dialog.querySelector("#h1title").innerHTML=self.content.header;
 
         });
+        
 
-        render(content, this.cjMediaDialog);
-        document.body.appendChild(this.cjMediaDialog);
-
-        return ret;
-
-    }
-
-}
-
-export class cjQuestionDialog {
-    constructor(question) {
-        this.question = question;
         //this.id = Date.now();
-        this.cjMediaDialog = null;
+        //this.cjMediaDialog = null;
+        this.Dialog = null;
     }
 
     open() {
-
-        this.cjMediaDialog = new CjMediaDialog();
-
+        // Prepare promise to handle return values from dialog
         let res, rej;
         let ret = new Promise(function (resolve, reject) {
-            res=resolve;
-            rej=reject;
+            res = resolve;
+            rej = reject;
         });
 
-        let test="Hola";
+        let content = html`
+        <style>
+            ${cjDialogStyle}
+        </style>
+        <div slot="content">
+            <h1 id="h1title">${this.content.header}</h1>
+            <iframe name="content" width="100%" height="700" id="iframe"
+                src="https://www.youtube.com/embed/${this.content.url}?autoplay=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+          </iframe>
+          <div class="cjButtonPanel">
+                <button class="cjBt cjBtRed" @click=${function (e) {
+                        //console.log("Clicked on No");
+                        res(false);
+                    }}>${this.content.BtCancel}</button>
+            </div>
+        </div>
+        `
 
-        let content = html`<div slot="content">
-        <h1>Titol</h1>
-        <p>${this.question}</p>
-        <button @click=${function (e) {
-                console.log("Clicked on Yes "+test);
-                res(true);
-                //ret.resolve(true);
-            }}>yes</button>
-        <button @click=${function (e) {
-                console.log("Clicked on no "+test);
-                //console.log(ret);
-                res(false);
-                //ret.resolve(false);
-            }}>no</button>
-        </div>`
+        this.Dialog = document.createElement("cj-dialog");
+        this.Dialog.setAttribute("width", 100);
+        this.Dialog.setAttribute("height", 100);
 
-        render(content, this.cjMediaDialog);
-        document.body.appendChild(this.cjMediaDialog);
+        render(content, this.Dialog);
+        document.body.appendChild(this.Dialog);
 
-        console.log(ret);
+        //console.log(ret);
         return ret;
 
+    }
+
+    getYoutubeInfo(videoId){
+        let gUrl="http://www.joamuran.net/classroom-assembly/getVideoInfo.php?id="+videoId;
+        
+        return fetch(gUrl)
+        .then(function(data){
+            try{
+                return data.json();
+            }   catch(err){
+                return false;
+            }
+        });
+        /*.then(function(resp){
+            response.resolve resp.items[0].snippet;
+        });
+        
+        return response;*/
+    };
+
+    close() {
+        this.Dialog.close();
     }
 
 }

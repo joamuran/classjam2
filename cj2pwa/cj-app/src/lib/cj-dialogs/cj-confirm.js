@@ -19,7 +19,7 @@ export class cjConfirm {
 
         typeof(content.BtCancel)!="undefined" ?
          this.content.BtCancel=content.BtCancel :
-          this.content.BtCancel="Prompt";
+          this.content.BtCancel="Cancel";
 
         this.Dialog=null;
         

@@ -5,7 +5,7 @@ import { CjPicto } from "./cj-picto";
 
 
 import { translate } from "@appnest/lit-translate"; // i18n
-import { DileModal } from "../lib/dile-modal/dile-modal"; // Modal window: dile-modal
+//import { DileModal } from "../lib/dile-modal/dile-modal"; // Modal window: dile-modal
 import { SimpleComponent } from './simple-component/simple-component';
 
 
@@ -16,17 +16,17 @@ export class MonthComponent extends SimpleComponent {
         this.componentName="monthComponent";
     }    
 
-    updateState(e) {
+    updateState(selectedToConfirm) {
         this.dispatchEvent(new CustomEvent('updateState', {
             bubbles: true,
             composed: true,
             detail: { component: "monthComponent",
                       key: "month",   /* Updates key in componentdata */
-                      value: this.selectedToConfirm }
+                      value: selectedToConfirm }
 
         }));
         // ModalConfirm defined in simple-component.js
-        this.shadowRoot.getElementById("modalConfirm").close();
+        //this.shadowRoot.getElementById("modalConfirm").close();
     }
 
     getComponentOptions(){

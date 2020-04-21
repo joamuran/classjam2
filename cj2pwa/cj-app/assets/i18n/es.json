@@ -78,5 +78,8 @@
     "saturday": "Sábado",
     "sunday": "Domingo",
     "": " "
+  },
+  "media":{
+    "play":"Reproducir"
   }
 }

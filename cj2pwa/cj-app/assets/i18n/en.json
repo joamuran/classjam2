@@ -78,5 +78,8 @@
     "saturday": "Saturday",
     "sunday": "Sunday",
     "": " "
+    },
+    "media":{
+      "play":"Play"
     }
   }

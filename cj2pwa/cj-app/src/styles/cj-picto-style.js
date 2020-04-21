@@ -2,18 +2,27 @@ import { css } from 'lit-element';
 
 export const CjPictoStyle = css`
 
+
+:host{
+    margin: 0px auto;
+    display: flex;
+    height: 90%;
+    width: 100%;
+    flex-flow: column;
+}
+
 .iconPictoText{
     font-size: 12px;
     height: 15%;
     width: 100%;
-    top: -15%;
+    /*top: -15%;*/
     position: relative;
 }
 
 .iconPicto{
     /*border: 1px solid #000000;*/
     width: 100%;
-    height: 100%;
+    height: 70%;
     background-size: contain;
     background-repeat: no-repeat;
     transition: all 0.4s;

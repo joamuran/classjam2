@@ -1,6 +1,10 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
+import {CjShowDialog} from '../../cj-dialogs/cj-show-dialog';
+import {CjSelectItemDialog} from '../../cj-dialogs/cj-select-item-dialog';
+import {CjConfirmSimpleComponent} from '../../cj-dialogs/cj-confirm-simple-component';
+
 /* Sobre el REsizeObserver:
 S'utilitza per detectar els canvis de tamany i segons aquests, apliquem
 l'escalat als nostres components. 
@@ -49,7 +53,42 @@ export class SimpleComponent extends LitElement {
 
         // In Assembly mode, let's start the component selection dialog
         console.log("Editing: " + this.isediting);
-        this.shadowRoot.getElementById("modalSelector").open();
+        
+        // Deprecated: this.shadowRoot.getElementById("modalSelector").open();
+        
+        let dlg=new CjSelectItemDialog(this.getComponentOptions(), this.config);
+        let self=this;
+        dlg.open().then(function(e){
+            
+            let dlgConf=new CjConfirmSimpleComponent(e.target.picto, self.getComponentOptions());
+            dlgConf.open().then(function(selected){
+
+                // WIP: res és el resultat (true/false) de la promesa,
+                // si és false, ha de seguir en este diàleg 
+                // com que la promesa ja ha estat resolta, el diàleg es
+                // tanca i es torna a obrir
+                //console.log("En then");
+
+                // Cal revisar el updatestate de cada component
+                // i mirar que el diàleg ens torne bé el selectedtoconfirm
+                // ara torna undefined
+                // ->> Ara si... era el self-this... cal revisar tots els
+                // components individualment per modificar el updatestate...
+                // Està fet només el del mes...
+                // i revisar com apareix el diàleg.. en lloc del 50% que siga un 80 o aixo...
+
+                console.log("!!!!!selected");
+                console.log(selected);
+                
+                if (selected==false) self.handleClick(); 
+                else self.updateState(selected);
+                dlgConf.close();
+            });
+            //self.confirmDialog(data);
+            dlg.close();
+
+        });
+        
     }
 
     firstUpdated(changedProperties) {
@@ -86,17 +125,17 @@ export class SimpleComponent extends LitElement {
         //divToScale.querySelector("[name=margins]").style.transform= "scale(" + scale*3 + ")";
     }
 
-    confirmDialog(e) {
+    /*confirmDialog(e) {
         //console.log(e.target.picto);
         this.selectedToConfirm = e.target.picto;
         this.shadowRoot.getElementById("modalConfirm").open();
-        this.shadowRoot.getElementById("modalSelector").close();
+        //this.shadowRoot.getElementById("modalSelector").close();
 
-    }
+    }*/
 
-    cancelDialog(e) {
+    /*cancelDialog(e) {
         this.shadowRoot.getElementById("modalConfirm").close();
-    }
+    }*/
 
     static get styles() {
 
@@ -116,7 +155,6 @@ export class SimpleComponent extends LitElement {
         }
 
         :host([isediting]){
-            /*border: dotted 2px orange;*/
             background-color: rgba(255,165,0,0.4);
             cursor:move;
         }
@@ -154,7 +192,15 @@ export class SimpleComponent extends LitElement {
 
     playComponent(e) {
         e.stopPropagation();
-        this.shadowRoot.getElementById("modalPlayMedia").open();
+        let self=this;
+        let dlg=new CjShowDialog(this.getComponentOptions());
+        dlg.open().then(function(data){
+            console.log("En then");
+            console.log(data);
+            self.playMedia(data);
+        });
+        // Deprecated: this.shadowRoot.getElementById("modalPlayMedia").open();
+        
     }
 
     playMedia(e) {
@@ -222,7 +268,7 @@ export class SimpleComponent extends LitElement {
 
     render() {
 
-        let configArray = new Array();
+        /*let configArray = new Array();
         console.log(this.config);
         for (let k of Object.keys(this.config)) {
             // Add item only if is active (config.item is true)
@@ -236,10 +282,12 @@ export class SimpleComponent extends LitElement {
         //else if (configArray.length <= 8) divisions = 4;
         else divisions = 4;
         let pictosize = Math.floor((dialogWidth - 200) / divisions);
-
+*/
         let componentOptions = this.getComponentOptions();
 
         console.log(componentOptions);
+
+        
         return html`
         <style>
             .thumbup, .thumbdown{
@@ -262,9 +310,9 @@ export class SimpleComponent extends LitElement {
             .thumbup{  background-image: url("assets/img/thumbup.png"); }
             .thumbdown{ background-image: url("assets/img/thumbdown.png"); }
 
-            .selectablePicto{
-                /*width:200px;
-                height:200px;*/
+            /*.selectablePicto{
+                width:200px;
+                height:200px;
                 float: left;
                 margin:10px;
                 transition: all ease 0.5s;
@@ -272,12 +320,12 @@ export class SimpleComponent extends LitElement {
             }
             .selectablePicto:hover{
                 transform: scale(1.2);
-            }
+            }*/
 
-
+/*
             .mediaPlay{
 
-                /*background-color: #ffff00;*/
+                /*background-color: #ffff00;* /
                 width: 80%; 
                 margin-top: -100px;
                 padding:0px; 
@@ -290,7 +338,7 @@ export class SimpleComponent extends LitElement {
                 display: inline-block;
                 transition: all ease 0.3s;
                 background-image: url("assets/img/PlayContentButton.png"); 
-            }
+            }*/
 
 
         </style>
@@ -306,61 +354,43 @@ export class SimpleComponent extends LitElement {
         </div>
 
 
-        <!-- https://www.webcomponents.org/element/dile-modal -->
-            <dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; "
-                        id="modalSelector" >
-                <div style="border:20px; min-height:300px; float:left; padding:20px;">
-                    <h3>${componentOptions.headerQuestion}</h3>
-                    ${configArray.map(item => html`
-                    <div class="selectablePicto">
-                        <cj-picto @click=${function (e) { this.confirmDialog(e); }} 
-                                class="selectable" 
-                                picto="${item}" 
-                                pictowidth="${pictosize}" pictoheight="${pictosize}"
-                                label="${translate(componentOptions.componentPrefix + item)}"></cj-picto>
-                                
-                    </div>
-                    `)}   
-                </div>
-            </dile-modal> 
+        <!-- Deleted -->
 
-            <dile-modal showCloseIcon 
+            <!--dile-modal showCloseIcon 
                         style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; "
                         id="modalConfirm" >
-                        <h3 style="margin: 10px;">${translate("component.verify")}</h3>
+                        <h1 class="dlgHeader">$ {translate("component.verify")}</h1>
 
                         <cj-picto picto="${this.selectedToConfirm}" 
                         style="margin: 0px auto; display: inline-block;"
-                        label="${translate(componentOptions.componentPrefix + this.selectedToConfirm)}"
+                        label="$ {translate(componentOptions.componentPrefix + this.selectedToConfirm)}"
                         pictowidth=500 pictoheight=500></cj-picto>
 
                         <div style="/*background-color: #ffff00;*/
                                     width: 100%; 
                                     height: 180px; 
                                     /*margin-left: -100px;*/
-                                    margin-top: -80px; 
+                                    /*margin-top: -80px; */
                                     padding:0px; 
                                     overflow: visible">
-                            <div class="thumbup" @click=${function (e) { this.updateState(e); }}></div>
-                            <div class="thumbdown" @click=${function (e) { this.cancelDialog(e); }}></div>
+                            <div class="thumbup" @click=$ {function (e) { this.updateState(e); }}></div>
+                            <div class="thumbdown" @click=$ {function (e) { this.cancelDialog(e); }}></div>
                         </div>
                 
-            </dile-modal> 
-
+            </dile-modal-->
 
             <!-- Dialog for media play -->
-            <dile-modal showCloseIcon 
+            <!--dile-modal showCloseIcon 
                 style="--dile-modal-width:1000px; "
                 id="modalPlayMedia" >  
-                <h2 style="margin: 10px;">${componentOptions.currentLabel}</h2>
-                <cj-picto picto="${componentOptions.currentPicto}" 
+                <h2 style="margin: 10px;">$ {componentOptions.currentLabel}</h2>
+                <cj-picto picto="$ {componentOptions.currentPicto}" 
                     style="margin: 0px auto; display: inline-block;"
                     label=""
                     pictowidth=500 pictoheight=500></cj-picto>
-                    <div class="mediaPlay" @click=${function (e) { this.playMedia(e); }}></div>
+                    <div class="mediaPlay" @click=$ {function (e) { this.playMedia(e); }}></div>
 
-            </dile-modal> 
+            </dile-modal>-- 
 
             <!-- Dialog for media play -- >
             <dile-modal showCloseIcon 

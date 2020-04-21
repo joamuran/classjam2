@@ -15,14 +15,14 @@ import { PaperGridCustomStyle } from './styles/paper-grid-custom-style.js';
 
 /* Import Menu and dialogs*/
 import './cj-menu'
-import { CjYoutubeDialog } from './lib/cj-dialogs/cj-youtube-dialog'
+import { CjYoutubeDialog } from './cj-dialogs/cj-youtube-dialog'
 
 /* Components import */
 import './components/season-component'
 import './components/weather-component'
 import './components/month-component'
 import './components/weekday-component'
-/*import { CjMediaDialog } from './lib/cj-dialogs/cj-media-dialog';*/
+/*import { CjMediaDialog } from './cj-dialogs/cj-media-dialog';*/
 
 
 
@@ -356,7 +356,7 @@ export class CjApp extends LitElement {
     </div> <!-- end appContainer -->
 
     <!-- Dialog for media play -->
-            <dile-modal showCloseIcon 
+            <!--dile-modal showCloseIcon 
                 style="--dile-modal-width:1000px; "
                 id="youtubePlayer" >  
                 
@@ -367,7 +367,7 @@ export class CjApp extends LitElement {
                     allowfullscreen>
                 </iframe>
 
-            </dile-modal> 
+            </dile-modal--> 
 
 
     `;
@@ -424,16 +424,16 @@ export class CjApp extends LitElement {
 
     });
 
-    document.addEventListener("dile-modal-closed", function (e) {
+    /*document.addEventListener("dile-modal-closed", function (e) {
       /*
        * Event dile-modal-closed: Stops youtube player when closing modal
        * Triggered by: dile-modal
-       */
+       * /
       let iframe = self.shadowRoot.getElementById("iframe");
       let src = "https://www.youtube.com/embed/" + self.mediaUrl;
       iframe.setAttribute("src", src);
 
-    });
+    });*/
 
     document.addEventListener("updateState", function (e) {
       /*

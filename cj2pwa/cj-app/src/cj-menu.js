@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { translate } from "@appnest/lit-translate"; // i18n
 
-import { cjConfirm } from './lib/cj-dialogs/cj-confirm'
+import { cjConfirm } from './cj-dialogs/cj-confirm'
 
 
 export class CjMenu extends LitElement {

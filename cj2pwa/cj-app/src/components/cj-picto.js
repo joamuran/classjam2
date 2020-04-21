@@ -26,8 +26,33 @@ export class CjPicto extends LitElement {
         return CjPictoStyle;
     }
 
+
     render() {
         let fontSize=Math.round(this.pictowidth*12/100);
+        // Revisar aci, a vore si es pot fer "flex"
+        return html`
+            <style>
+                .picto{
+                    height:100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items:stretch;
+                }
+            </style>
+            <div class="picto">
+            ${this.label=="" ?
+                html`<div class="iconPicto ${this.picto}" ></div>`
+                :
+                html`<div class="iconPicto ${this.picto}" ></div>
+                     <div  class="iconPictoText" style="font-size: ${fontSize}px">${this.label}</div>`
+            }
+            
+            </div>
+        `;
+    }
+    /*render() {
+        let fontSize=Math.round(this.pictowidth*12/100);
+        // Revisar aci, a vore si es pot fer "flex"
         return html`
             <div class="picto" style="width:${this.pictowidth}px; height:${this.pictoheight}px">
             ${this.label=="" ?
@@ -39,6 +64,6 @@ export class CjPicto extends LitElement {
             
             </div>
         `;
-    }
+    }*/
 }
 customElements.define('cj-picto', CjPicto);

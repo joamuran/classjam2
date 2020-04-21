@@ -1,11 +1,8 @@
 import { LitElement, html, css } from 'lit-element';
-
-/* */
 import { CjPicto } from "./cj-picto";
 
 
 import { translate } from "@appnest/lit-translate"; // i18n
-//import { DileModal } from "../lib/dile-modal"; // Modal window: dile-modal
 import { SimpleComponent } from './simple-component/simple-component';
 
 
@@ -25,8 +22,7 @@ export class WeatherComponent extends SimpleComponent {
                       value: selectedToConfirm }
 
         }));
-        // ModalConfirm defined in simple-component.js
-        //this.shadowRoot.getElementById("modalConfirm").close();
+        
     }
 
     getComponentOptions(){

@@ -53,33 +53,13 @@ export class SimpleComponent extends LitElement {
 
         // In Assembly mode, let's start the component selection dialog
         console.log("Editing: " + this.isediting);
-        
-        // Deprecated: this.shadowRoot.getElementById("modalSelector").open();
-        
+               
         let dlg=new CjSelectItemDialog(this.getComponentOptions(), this.config);
         let self=this;
         dlg.open().then(function(e){
             
             let dlgConf=new CjConfirmSimpleComponent(e.target.picto, self.getComponentOptions());
-            dlgConf.open().then(function(selected){
-
-                // WIP: res és el resultat (true/false) de la promesa,
-                // si és false, ha de seguir en este diàleg 
-                // com que la promesa ja ha estat resolta, el diàleg es
-                // tanca i es torna a obrir
-                //console.log("En then");
-
-                // Cal revisar el updatestate de cada component
-                // i mirar que el diàleg ens torne bé el selectedtoconfirm
-                // ara torna undefined
-                // ->> Ara si... era el self-this... cal revisar tots els
-                // components individualment per modificar el updatestate...
-                // Està fet només el del mes...
-                // i revisar com apareix el diàleg.. en lloc del 50% que siga un 80 o aixo...
-
-                console.log("!!!!!selected");
-                console.log(selected);
-                
+            dlgConf.open().then(function(selected){                
                 if (selected==false) self.handleClick(); 
                 else self.updateState(selected);
                 dlgConf.close();
@@ -121,21 +101,8 @@ export class SimpleComponent extends LitElement {
         //console.log(scale);
         let divToScale = this.shadowRoot.querySelector("div.component");
         divToScale.style.transform = "scale(" + scale + ")";
-        //this.scale=scale;
-        //divToScale.querySelector("[name=margins]").style.transform= "scale(" + scale*3 + ")";
+      
     }
-
-    /*confirmDialog(e) {
-        //console.log(e.target.picto);
-        this.selectedToConfirm = e.target.picto;
-        this.shadowRoot.getElementById("modalConfirm").open();
-        //this.shadowRoot.getElementById("modalSelector").close();
-
-    }*/
-
-    /*cancelDialog(e) {
-        this.shadowRoot.getElementById("modalConfirm").close();
-    }*/
 
     static get styles() {
 
@@ -199,7 +166,6 @@ export class SimpleComponent extends LitElement {
             console.log(data);
             self.playMedia(data);
         });
-        // Deprecated: this.shadowRoot.getElementById("modalPlayMedia").open();
         
     }
 
@@ -244,12 +210,6 @@ export class SimpleComponent extends LitElement {
                     composed: true,
                     detail: { url: source }
                 }));
-                // ModalConfirm defined in simple-component.js
-                //this.shadowRoot.getElementById("modalConfirm").close();
-
-
-                
-                //this.shadowRoot.getElementById("youtubePlayer").open();
             }
 
         } catch(e)
@@ -310,37 +270,6 @@ export class SimpleComponent extends LitElement {
             .thumbup{  background-image: url("assets/img/thumbup.png"); }
             .thumbdown{ background-image: url("assets/img/thumbdown.png"); }
 
-            /*.selectablePicto{
-                width:200px;
-                height:200px;
-                float: left;
-                margin:10px;
-                transition: all ease 0.5s;
-
-            }
-            .selectablePicto:hover{
-                transform: scale(1.2);
-            }*/
-
-/*
-            .mediaPlay{
-
-                /*background-color: #ffff00;* /
-                width: 80%; 
-                margin-top: -100px;
-                padding:0px; 
-                overflow: visible;
-                height: 100px;
-                position: relative;
-                background-size: contain;
-                background-repeat: no-repeat;
-                background-position: center;
-                display: inline-block;
-                transition: all ease 0.3s;
-                background-image: url("assets/img/PlayContentButton.png"); 
-            }*/
-
-
         </style>
 
 
@@ -353,60 +282,6 @@ export class SimpleComponent extends LitElement {
             <cj-picto picto="${componentOptions.currentPicto}" label="${componentOptions.currentLabel}"></cj-picto>
         </div>
 
-
-        <!-- Deleted -->
-
-            <!--dile-modal showCloseIcon 
-                        style="--dile-modal-background-color: rgba(0,255,0,0.0); --dile-modal-width:1000px; "
-                        id="modalConfirm" >
-                        <h1 class="dlgHeader">$ {translate("component.verify")}</h1>
-
-                        <cj-picto picto="${this.selectedToConfirm}" 
-                        style="margin: 0px auto; display: inline-block;"
-                        label="$ {translate(componentOptions.componentPrefix + this.selectedToConfirm)}"
-                        pictowidth=500 pictoheight=500></cj-picto>
-
-                        <div style="/*background-color: #ffff00;*/
-                                    width: 100%; 
-                                    height: 180px; 
-                                    /*margin-left: -100px;*/
-                                    /*margin-top: -80px; */
-                                    padding:0px; 
-                                    overflow: visible">
-                            <div class="thumbup" @click=$ {function (e) { this.updateState(e); }}></div>
-                            <div class="thumbdown" @click=$ {function (e) { this.cancelDialog(e); }}></div>
-                        </div>
-                
-            </dile-modal-->
-
-            <!-- Dialog for media play -->
-            <!--dile-modal showCloseIcon 
-                style="--dile-modal-width:1000px; "
-                id="modalPlayMedia" >  
-                <h2 style="margin: 10px;">$ {componentOptions.currentLabel}</h2>
-                <cj-picto picto="$ {componentOptions.currentPicto}" 
-                    style="margin: 0px auto; display: inline-block;"
-                    label=""
-                    pictowidth=500 pictoheight=500></cj-picto>
-                    <div class="mediaPlay" @click=$ {function (e) { this.playMedia(e); }}></div>
-
-            </dile-modal>-- 
-
-            <!-- Dialog for media play -- >
-            <dile-modal showCloseIcon 
-                style="--dile-modal-width:1000px; "
-                id="youtubePlayer" >  
-                < !--https://googlewebcomponents.github.io/google-youtube/components/google-youtube/ -- >
-
-                <iframe width="1280" height="720" 
-                    src="https://www.youtube.com/embed/${this.youtubeurl}" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-
-            </dile-modal--> 
-        
         `;
     }
 

@@ -170,50 +170,6 @@ export class CjApp extends LitElement {
     `;
   }
 
-  /*renderPlayBt(editing, data, config) {
-    return;
-    // Render player button if has media associated
-    let media={"url":"Hola"};
-    return html`
-    <style>
-     span[slot="playBt"]{
-      width: 30px;
-      height: 30px;
-      position: absolute;
-      background-image: url('/assets/img/PlayComponentButton.png');
-      background-size: cover;
-      bottom: 10px;
-      left: 10px;
-      z-index:1;
-        
-      ${editing ? html`display: none;` : html`display:block;`}
-      }
-
-      span[slot="playBt"]:hover{
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        background-image: url('/assets/img/PlayComponentButtonHover.png');
-        background-size: cover;
-        bottom: 10px;
-        left: 10px;
-          
-        
-      }
-    </style>
-    
-    <span slot="playBt" @click=${function(e){this.playComponent(e, media);}} ></span>
-    
-    `;
-  }
-
-  playComponent(e, media){
-    e.stopPropagation();
-    this.shadowRoot.getElementById("modalPlayMedia").open();
-    
-  }
-*/
-
   renderComponent(component) {
     //console.log("row: "+component.row+" col:"+component.col);
     //console.log(this.shadowRoot.getElementById("grid"));
@@ -233,7 +189,7 @@ export class CjApp extends LitElement {
             config=${component.componentconfig}>
             ${this.renderMargins(this.editMode)}            
           </season-component>`;
-      //${this.renderPlayBt(this.editMode, component.componentdata, component.componentconfig)}
+
 
       case "weatherComponent":
         return html`
@@ -315,29 +271,10 @@ export class CjApp extends LitElement {
       this.gridOptions.defaultWidth / this.gridOptions.rows);
 
     return html`
-
-    <!--cj-media-dialog>
-    <div slot="content">
-      <h1>hola ke ase</h1>
-    <iframe name="content" width="100%" height="700" id="iframe"
-                    src="https://www.youtube.com/embed/dAALIxJanVM?autoplay=1" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-
-                    <p>adios</p>
-    
-    </iframe>
-    </div>
-
-    </cj-media-dialog-->
-    
     <cj-menu></cj-menu>
     <div id="appContainer">
     <h1 style="height:${this.gridOptions.headerHeight}px">Class Jam</h1>
-
-    <!--button style="position: fixed; z-index: 10; top: 10px; right: 10px;" id="btEdit" @click=${function () { this.toggleEditMode() }}>Edit</button-->
-        
+    
     <div id="gridContainer" style="transform: scale(0.9); width:${this.gridOptions.defaultWidth}px; height:${this.gridOptions.defaultHeight}px;">
     <paper-grid  animated 
                   ?draggable="${this.editMode}" 
@@ -354,21 +291,6 @@ export class CjApp extends LitElement {
       </paper-grid>
     </div>
     </div> <!-- end appContainer -->
-
-    <!-- Dialog for media play -->
-            <!--dile-modal showCloseIcon 
-                style="--dile-modal-width:1000px; "
-                id="youtubePlayer" >  
-                
-                <iframe width="100%" height="700" id="iframe"
-                    src="https://www.youtube.com/embed/${this.mediaUrl}?autoplay=1" 
-                    frameborder="0" 
-                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-
-            </dile-modal--> 
-
 
     `;
   }
@@ -406,9 +328,6 @@ export class CjApp extends LitElement {
        * Triggered by: playMedia method in simple-component
        */
       self.mediaUrl = e.detail.url;
-      //self.shadowRoot.getElementById("youtubePlayer").open();
-
-      //let cjMediaDialog = document.createElement("cj-media-dialog");
 
       let myDialog = new CjYoutubeDialog(
         {
@@ -424,17 +343,7 @@ export class CjApp extends LitElement {
 
     });
 
-    /*document.addEventListener("dile-modal-closed", function (e) {
-      /*
-       * Event dile-modal-closed: Stops youtube player when closing modal
-       * Triggered by: dile-modal
-       * /
-      let iframe = self.shadowRoot.getElementById("iframe");
-      let src = "https://www.youtube.com/embed/" + self.mediaUrl;
-      iframe.setAttribute("src", src);
-
-    });*/
-
+    
     document.addEventListener("updateState", function (e) {
       /*
        * Event updateState: Updates App state to force its rendering

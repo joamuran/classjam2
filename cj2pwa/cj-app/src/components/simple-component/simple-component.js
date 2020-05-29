@@ -136,7 +136,7 @@ export class SimpleComponent extends LitElement {
             width: 30px;
             height: 30px;
             position: absolute;
-            background-image: url('/assets/img/PlayComponentButton.png');
+            background-image: url('assets/img/PlayComponentButton.png');
             background-size: cover;
             bottom: 10px;
             left: 10px;
@@ -147,7 +147,7 @@ export class SimpleComponent extends LitElement {
             width: 30px;
             height: 30px;
             position: absolute;
-            background-image: url('/assets/img/PlayComponentButtonHover.png');
+            background-image: url('assets/img/PlayComponentButtonHover.png');
             background-size: cover;
             bottom: 10px;
             left: 10px;

@@ -2,23 +2,29 @@
   "scripts": {
     "start:build": "es-dev-server --root-dir dist --app-index index.html --open --compatibility none",
     "build": "rimraf dist && rollup -c rollup.config.js",
-    "start": "es-dev-server --app-index index.html --node-resolve --open --watch"
+    "start": "es-dev-server --app-index index.html --node-resolve --open --watch",
+    "desktop:build": "npm run-script build && if [ -d desktop ]; then rm -r desktop; fi && cp -r dist desktop && cp -r assets desktop && cp -r desktop-skel/* desktop ",
+    "desktop:run": "npm --prefix desktop install; npm --prefix desktop start",
+    "desktop:package": "npm run-script desktop:build && electron-packager desktop ClassJam2"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^0.21.0",
+    "electron-packager": "^14.2.1",
     "es-dev-server": "^1.46.1",
     "rimraf": "^2.6.3",
     "rollup": "^1.15.4"
   },
   "name": "cj-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Webcomponent cj-app following open-wc recommendations",
-  "author": "cj-app",
+  "author": "joamuran@gmail.com",
   "license": "MIT",
+  "main": "desktop.js",
   "dependencies": {
     "@appnest/lit-translate": "^1.1.18",
     "@fluidnext-polymer/paper-grid": "^3.0.4",
     "lit-element": "^2.3.1",
-    "lit-html": "^1.2.1"
+    "lit-html": "^1.2.1",
+    "electron": "^7.1.14"
   }
 }

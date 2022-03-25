@@ -25,6 +25,6 @@
     "@fluidnext-polymer/paper-grid": "^3.0.4",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
-    "electron": "^7.1.14"
+    "electron": "^13.6.6"
   }
 }
